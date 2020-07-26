@@ -1,0 +1,146 @@
+{
+    "_patterns": {
+        "booleanPrefix": "^(is|has|show|hide)",
+        "endsWithDateTime": "([Dd]ate|[Ttime])$",
+        "endsWithImage": "[Ii]m(age|g)$",
+        "endsWithNavigationMenu": "([Nn]av(igation)?|[Mm]enu)$",
+        "endsWithUriUrlLink": "([Uu]r[il]|[Ll]ink)$",
+        "kebabCase": "^([a-z0-9]+-)*[a-z0-9]+$",
+        "lowerCamelCase": "^[a-z][a-zA-Z0-9]+$",
+        "noNumbers": "^[^0-9]$",
+        "noNumberSuffix": "[0-9]+$",
+        "snakeCase": "^([a-z0-9]+_)*[a-z0-9]+$"
+    },
+    "params": {
+        "namingConventions": ["lowerCamelCase", "noNumberSuffix"],
+        "namingConventionsAdditionalPerType": {
+            "boolean": "hasBooleanPrefix"
+        },
+        "paramCount": {
+            "max": 20,
+            "min": 0
+        },
+        "paramNameLength": {
+            "min": 3,
+            "max": 50
+        },
+        "requireNamespaceWithoutLeadingSlash": true,
+        "requireTypeAliases": false,
+        "typeHints": {
+            "endsWithDateTime": "SMS\\FluidComponents\\Domain\\Model\\DateTime",
+            "endsWithImage": "Image",
+            "endsWithNavigationMenu": "Navigation",
+            "endsWithUriUrlLink": "Typolink",
+            "hasBooleanPrefix": "boolean"
+        },
+        "typeRestrictions": {
+            "array": {
+                "message": "It is recommended to use data structures or scalar types in combination with \"[]\" instead of generic \"array\"",
+                "type": "notice"
+            },
+            "bool": {
+                "message": "For conformity it is recommended to use \"boolean\" instead of \"bool\"",
+                "type": "notice"
+            },
+            "int": {
+                "message": "For conformity it is recommended to use \"integer\" instead of \"int\"",
+                "type": "notice"
+            },
+            "object": {
+                "message": "It is recommended to use specific data structures istead of generic \"object\"",
+                "type": "notice"
+            }
+        }
+    },
+    "renderer": {
+        "requireClass": true,
+        "requireComponentPrefixer": true,
+        "requireRawContent": true,
+        "viewHelperRestrictions": {
+            "f:base": {
+                "message": "The base tag must not be used within components",
+                "type": "error"
+            },
+            "f:be.*": {
+                "message": "The backend ViewHelpers should not be used within components",
+                "type": "warning"
+            },
+            "f:cache.*": {
+                "message": "The caching ViewHelpers should not be used within components",
+                "type": "warning"
+            },
+            "f:cObject": {
+                "message": "TypoScript content must be passed as a component parameter",
+                "type": "error"
+            },
+            "f:debug": {
+                "message": "f:debug may be used in components, but should not be used in production",
+                "type": "notice"
+            },
+            "f:flashMessages": {
+                "message": "Flash messages must be passed as a component parameter",
+                "type": "error"
+            },
+            "f:form": {
+                "message": "Form ViewHelpers may be used deliberately within components",
+                "type": "notice"
+            },
+            "f:form.*": {
+                "message": "Form ViewHelpers may be used deliberately within components",
+                "type": "notice"
+            },
+            "f:format.html": {
+                "message": "f:format.html must be used outside of the component, f:format.raw may be used within component to render HTML previously passed through f:format.html",
+                "type": "error"
+            },
+            "f:image": {
+                "message": "f:image should be used deliberately within components (e. g. only in Atom.Image)",
+                "type": "warning"
+            },
+            "f:inline": {
+                "message": "Inline fluid code may be used deliberately within components",
+                "type": "notice"
+            },
+            "f:layout": {
+                "message": "Layouts are currently not supported within components and thus must not be used",
+                "type": "error"
+            },
+            "f:link.*": {
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "type": "error"
+            },
+            "f:media": {
+                "message": "f:media should be used deliberately within components (e. g. only in Atom.Media)",
+                "type": "warning"
+            },
+            "f:render": {
+                "message": "Rendering sections or partials is currently not supported within components and thus must not be used",
+                "type": "error"
+            },
+            "f:renderChildren": {
+                "message": "Widgets should be part of integration",
+                "type": "warning"
+            },
+            "f:section": {
+                "message": "Sections are currently not supported within components and thus must not be used",
+                "type": "error"
+            },
+            "f:security.*": {
+                "message": "Frontend user logic must happen outside of components and then passed as a parameter",
+                "type": "error"
+            },
+            "f:translate": {
+                "message": "Translate may be used within components, try to pass translations via component parameters instead",
+                "type": "notice"
+            },
+            "f:uri.*": {
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "type": "error"
+            },
+            "f:widget.*": {
+                "message": "Widgets should be part of integration",
+                "type": "warning"
+            }
+        }
+    }
+}
