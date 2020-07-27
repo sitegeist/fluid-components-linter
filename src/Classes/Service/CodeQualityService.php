@@ -61,7 +61,8 @@ class CodeQualityService
             Check\ComponentVariablesCheck::class,
             Check\ParamNamingCheck::class,
             Check\ParamCountCheck::class,
-            Check\ParamDescriptionCheck::class
+            Check\ParamDescriptionCheck::class,
+            Check\ParamTypeNamespaceCheck::class
         ];
         $results = [];
 
