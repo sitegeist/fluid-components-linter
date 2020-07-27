@@ -62,7 +62,8 @@ class CodeQualityService
             Check\ParamNamingCheck::class,
             Check\ParamCountCheck::class,
             Check\ParamDescriptionCheck::class,
-            Check\ParamTypeNamespaceCheck::class
+            Check\ParamTypeNamespaceCheck::class,
+            Check\DocumentationFixtureCheck::class
         ];
         $results = [];
 

@@ -14,8 +14,8 @@
     "component": {
         "requireFixtureFile": false,
         "requireFluidInsideRenderer": true,
-        "requireReadme": false,
-        "requireReadmeWithFixtureFile": false
+        "requireDocumentation": false,
+        "requireDocumentationWithFixtureFile": true
     },
     "params": {
         "count": {
