@@ -62,9 +62,12 @@ class LintCommand extends Command
         );
 
         $codeQualityService = new CodeQualityService($configuration);
+        $hasValidationErrors = false;
         foreach ($components as $componentPath) {
             $messages = $codeQualityService->validateComponent($componentPath);
             if (!empty($messages)) {
+                $hasValidationErrors = true;
+
                 $section = $output->section();
                 $section->writeln([
                     $componentPath,
@@ -76,7 +79,7 @@ class LintCommand extends Command
             }
         }
 
-        return 0;
+        return ($hasValidationErrors) ? 1 : 0;
     }
 
     protected function getFinalConfiguration(?string $configurationPreset, ?string $configurationFile): array
