@@ -1,0 +1,24 @@
+<fc:component>
+    <fc:param name="title" type="string" />
+    <fc:param name="title2" type="string" />
+    <fc:param name="Title" type="string" />
+    <fc:param name="myBool" type="boolean" />
+    <fc:param name="hasPrefix" type="boolean" />
+    <fc:param name="i" type="string" />
+    <fc:param name="thisParameterIsDefinitelyTooLongToBeReadable" type="string" />
+
+    <fc:renderer>
+        <f:format.raw>test {class} lalala</f:format.raw>
+        <f:cObject typoscriptObjectPath="lib.test" />
+        {blubb}
+        {settings}
+        {settings.lalala}
+        {class.test -> f:format.raw()}
+        {class}
+        {title -> f:format.raw()}
+        {f:if(condition: blalala2, then: 'blubb')}
+        <f:if condition="{blalala}">
+            test
+        </f:if>
+    </fc:renderer>
+</fc:component>

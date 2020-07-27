@@ -1,0 +1,211 @@
+{
+    "_patterns": {
+        "hasBooleanPrefix": "^(is|has|show|hide)",
+        "endsWithDateTime": "([Dd]ate|[Ttime])$",
+        "endsWithImage": "[Ii]m(age|g)$",
+        "endsWithNavigationMenu": "([Nn]av(igation)?|[Mm]enu)$",
+        "endsWithUriUrlLink": "([Uu]r[il]|[Ll]ink)$",
+        "kebabCase": "^([a-z0-9]+-)*[a-z0-9]*$",
+        "lowerCamelCase": "^[a-z][a-zA-Z0-9]*$",
+        "noNumbers": "^[^0-9]$",
+        "noNumberSuffix": "[^0-9]+$",
+        "snakeCase": "^([a-z0-9]+_)*[a-z0-9]*$"
+    },
+    "component": {
+        "requireFixtureFile": false,
+        "requireFluidInsideRenderer": true,
+        "requireReadme": false,
+        "requireReadmeWithFixtureFile": false
+    },
+    "params": {
+        "count": {
+            "max": 20,
+            "min": 0
+        },
+        "extraNamingConventionsPerType": {
+            "boolean": "hasBooleanPrefix"
+        },
+        "namingConventions": ["lowerCamelCase", "noNumberSuffix"],
+        "nameLength": {
+            "min": 3,
+            "max": 40
+        },
+        "requireDescription": false,
+        "requireNamespaceWithoutLeadingSlash": true,
+        "requireTypeAliases": false,
+        "typeHints": {
+            "endsWithDateTime": {
+                "namePattern": "endsWithDateTime",
+                "typeHint": "SMS\\FluidComponents\\Domain\\Model\\DateTime",
+                "message": "It is recommended to use %s for date and time values",
+                "level": "notice"
+            },
+            "endsWithImage": {
+                "namePattern": "endsWithImage",
+                "typeHint": "Image",
+                "message": "It is recommended to use %s for images",
+                "level": "notice"
+            },
+            "endsWithNavigationMenu": {
+                "namePattern": "endsWithNavigationMenu",
+                "typeHint": "Navigation",
+                "message": "It is recommended to use %s for navigations",
+                "level": "notice"
+            },
+            "endsWithUriUrlLink": {
+                "namePattern": "endsWithUriUrlLink",
+                "typeHint": "Typolink",
+                "message": "It is recommended to use %s for urls",
+                "level": "notice"
+            },
+            "hasBooleanPrefix": {
+                "namePattern": "hasBooleanPrefix",
+                "typeHint": "boolean",
+                "message": "Based on its name, the parameter looks like a boolean",
+                "level": "notice"
+            }
+        },
+        "typeRestrictions": {
+            "array": {
+                "typeValue": "array",
+                "message": "It is recommended to use data structures or scalar types in combination with \"[]\" instead of generic \"%2$s\"",
+                "level": "notice"
+            },
+            "bool": {
+                "typeValue": "bool",
+                "typeRecommendation": "boolean",
+                "message": "It is recommended to use %1$s instead of %2$s",
+                "level": "notice"
+            },
+            "DateTime": {
+                "typeValue": "DateTime",
+                "typeRecommendation": "SMS\\FluidComponents\\Domain\\Model\\DateTime",
+                "message": "You should use %1$s instead of %2$s",
+                "level": "warning"
+            },
+            "int": {
+                "typeValue": "int",
+                "typeRecommendation": "integer",
+                "message": "It is recommended to use %1$s instead of %2$s",
+                "level": "notice"
+            },
+            "object": {
+                "typeValue": "object",
+                "message": "It is recommended to use specific data structures instead of generic \"%2$s\"",
+                "level": "notice"
+            }
+        }
+    },
+    "renderer": {
+        "requireClass": true,
+        "requireComponentPrefixer": true,
+        "requireRawContent": true,
+        "viewHelperRestrictions": {
+            "f:base": {
+                "viewHelperPattern": "f:base",
+                "message": "The base tag must not be used within components",
+                "level": "error"
+            },
+            "f:be.*": {
+                "viewHelperPattern": "f:be.*",
+                "message": "The backend ViewHelpers should not be used within components",
+                "level": "warning"
+            },
+            "f:cache.*": {
+                "viewHelperPattern": "f:cache.*",
+                "message": "The caching ViewHelpers should not be used within components",
+                "level": "warning"
+            },
+            "f:cObject": {
+                "viewHelperPattern": "f:cObject",
+                "message": "TypoScript content must be passed as a component parameter",
+                "level": "error"
+            },
+            "f:debug": {
+                "viewHelperPattern": "f:debug",
+                "message": "f:debug may be used in components, but should not be used in production",
+                "level": "notice"
+            },
+            "f:flashMessages": {
+                "viewHelperPattern": "f:flashMessages",
+                "message": "Flash messages must be passed as a component parameter",
+                "level": "error"
+            },
+            "f:form": {
+                "viewHelperPattern": "f:form",
+                "message": "Form ViewHelpers may be used deliberately within components",
+                "level": "notice"
+            },
+            "f:form.*": {
+                "viewHelperPattern": "f:form.*",
+                "message": "Form ViewHelpers may be used deliberately within components",
+                "level": "notice"
+            },
+            "f:format.html": {
+                "viewHelperPattern": "f:format.html",
+                "message": "f:format.html must be used outside of the component, f:format.raw may be used within component to render HTML previously passed through f:format.html",
+                "level": "error"
+            },
+            "f:image": {
+                "viewHelperPattern": "f:image",
+                "message": "f:image should be used deliberately within components (e. g. only in Atom.Image)",
+                "level": "warning"
+            },
+            "f:inline": {
+                "viewHelperPattern": "f:inline",
+                "message": "Inline fluid code may be used deliberately within components",
+                "level": "notice"
+            },
+            "f:layout": {
+                "viewHelperPattern": "f:layout",
+                "message": "Layouts are currently not supported within components and thus must not be used",
+                "level": "error"
+            },
+            "f:link.*": {
+                "viewHelperPattern": "f:link.*",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "level": "error"
+            },
+            "f:media": {
+                "viewHelperPattern": "f:media",
+                "message": "f:media should be used deliberately within components (e. g. only in Atom.Media)",
+                "level": "warning"
+            },
+            "f:render": {
+                "viewHelperPattern": "f:render",
+                "message": "Rendering sections or partials is currently not supported within components and thus must not be used",
+                "level": "error"
+            },
+            "f:renderChildren": {
+                "viewHelperPattern": "f:renderChildren",
+                "message": "Widgets should be part of integration",
+                "level": "warning"
+            },
+            "f:section": {
+                "viewHelperPattern": "f:section",
+                "message": "Sections are currently not supported within components and thus must not be used",
+                "level": "error"
+            },
+            "f:security.*": {
+                "viewHelperPattern": "f:security.*",
+                "message": "Frontend user logic must happen outside of components and then passed as a parameter",
+                "level": "error"
+            },
+            "f:translate": {
+                "viewHelperPattern": "f:translate",
+                "message": "Translate may be used within components, try to pass translations via component parameters instead",
+                "level": "notice"
+            },
+            "f:uri.*": {
+                "viewHelperPattern": "f:uri.*",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "level": "error"
+            },
+            "f:widget.*": {
+                "viewHelperPattern": "f:widget.*",
+                "message": "Widgets should be part of integration",
+                "level": "warning"
+            }
+        }
+    }
+}

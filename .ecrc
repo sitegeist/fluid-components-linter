@@ -1,0 +1,21 @@
+{
+    "Verbose": false,
+    "Debug": false,
+    "IgnoreDefaults": false,
+    "SpacesAftertabs": false,
+    "NoColor": false,
+    "Exclude": [
+        "vendor",
+        ".git",
+        ".DS_Store",
+        "node_modules"
+    ],
+    "AllowedContentTypes": [],
+    "PassedFiles": [],
+    "Disable": {
+        "EndOfLine": false,
+        "Indentation": false,
+        "InsertFinalNewline": false,
+        "TrimTrailingWhitespace": false
+    }
+}
