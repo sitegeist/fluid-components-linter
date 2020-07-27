@@ -75,7 +75,10 @@ class CodeQualityService
 
             $check = new $checkClassName($component, $this->configuration);
             try {
-                $results = array_merge($results, $check->check());
+                $checkResults = $check->check();
+                if (is_array($checkResults)) {
+                    $results = array_merge($results, $checkResults);
+                }
             } catch (CodeQualityException $e) {
                 $results[] = $e;
             }

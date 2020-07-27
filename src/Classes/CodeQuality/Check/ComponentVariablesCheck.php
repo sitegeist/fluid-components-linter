@@ -17,7 +17,7 @@ class ComponentVariablesCheck extends AbstractCheck
         'component\.(class|prefix|namespace)$'
     ];
 
-    public function check(): array
+    public function check(): void
     {
         $allowedVariables = array_merge($this->predefinedVariables, $this->generateParamNamePatterns());
         $allowedVariablesPattern = '#^(' . implode('|', $allowedVariables) . ')#';
@@ -43,8 +43,6 @@ class ComponentVariablesCheck extends AbstractCheck
                 '{' . implode('}, {', $invalidVariables) . '}'
             ), 1595870402);
         }
-
-        return [];
     }
 
     protected function generateParamNamePatterns(): array

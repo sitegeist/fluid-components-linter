@@ -7,7 +7,7 @@ use Sitegeist\FluidComponentsLinter\Exception\CodeQualityException;
 
 class ParamCountCheck extends AbstractCheck
 {
-    public function check(): array
+    public function check(): void
     {
         $count = $this->configuration['params']['count'];
 
@@ -26,7 +26,5 @@ class ParamCountCheck extends AbstractCheck
                 $count['min']
             ));
         }
-
-        return [];
     }
 }
