@@ -61,7 +61,7 @@ class LintCommand extends Command
             $input->getOption('extension')
         );
 
-        $codeQualityService = new CodeQualityService($configuration);
+        $codeQualityService = new CodeQualityService($configuration, $this->getRegisteredChecks());
         $hasValidationErrors = false;
         foreach ($components as $componentPath) {
             $messages = $codeQualityService->validateComponent($componentPath);
@@ -123,5 +123,10 @@ class LintCommand extends Command
     {
         // TODO read custom configuration file
         return [];
+    }
+
+    protected function getRegisteredChecks(): array
+    {
+        return require(__DIR__ . '/../../Configuration/CodeQualityChecks.php');
     }
 }

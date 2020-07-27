@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Sitegeist\FluidComponentsLinter\Service;
 
-use Sitegeist\FluidComponentsLinter\CodeQuality\Check;
+use Sitegeist\FluidComponentsLinter\CodeQuality\Check\CheckInterface;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Component;
 use Sitegeist\FluidComponentsLinter\Exception\CodeQualityException;
 use Sitegeist\FluidComponentsLinter\Exception\ComponentStructureException;
@@ -15,13 +15,30 @@ class CodeQualityService
     /** @var array */
     protected $configuration;
 
+    /** @var string[] */
+    protected $checks;
+
     /** @var TemplateView */
     protected $view;
 
-    public function __construct(array $configuration)
+    public function __construct(array $configuration, array $checks)
     {
         $this->configuration = $configuration;
+        $this->initializeChecks($checks);
         $this->initializeView();
+    }
+
+    protected function initializeChecks(array $checks): void
+    {
+        foreach ($checks as $checkClassName) {
+            if (!is_subclass_of($checkClassName, CheckInterface::class)) {
+                throw new \Exception(sprintf(
+                    'Invalid code quality check class: %s',
+                    $checkClassName
+                ), 1595870407);
+            }
+        }
+        $this->checks = $checks;
     }
 
     protected function initializeView(): void
@@ -57,24 +74,8 @@ class CodeQualityService
             return [$e];
         }
 
-        $checks = [
-            Check\ComponentVariablesCheck::class,
-            Check\ParamNamingCheck::class,
-            Check\ParamCountCheck::class,
-            Check\ParamDescriptionCheck::class,
-            Check\ParamTypeNamespaceCheck::class,
-            Check\DocumentationFixtureCheck::class
-        ];
         $results = [];
-
-        foreach ($checks as $checkClassName) {
-            if (!is_subclass_of($checkClassName, Check\CheckInterface::class)) {
-                throw new \Exception(sprintf(
-                    'Invalid code quality check class: %s',
-                    $checkClassName
-                ), 1595870407);
-            }
-
+        foreach ($this->checks as $checkClassName) {
             $check = new $checkClassName($component, $this->configuration);
             try {
                 $checkResults = $check->check();
