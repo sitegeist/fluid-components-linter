@@ -19,7 +19,7 @@ class ParamDescriptionCheck extends AbstractCheck
             $description = $arguments['description'] ?? '';
             $type = (string) $arguments['type'];
 
-            if (trim($description) !== '') {
+            if (trim((string) $description) !== '') {
                 continue;
             }
 
@@ -27,7 +27,7 @@ class ParamDescriptionCheck extends AbstractCheck
                 $results[] = new CodeQualityException(sprintf(
                     'Missing required description for parameter: %s',
                     $arguments['name']
-                ));
+                ), 1595883576);
             }
 
             if (isset($requireDescriptionForType[$type])) {
@@ -35,7 +35,7 @@ class ParamDescriptionCheck extends AbstractCheck
                     'Missing required description for %s parameter: %s',
                     $type,
                     $arguments['name']
-                ));
+                ), 1595883578);
             }
         }
 

@@ -16,7 +16,7 @@ class ParamCountCheck extends AbstractCheck
                 'The component has %d parameters, but only %d are allowed.',
                 count($this->component->paramNodes),
                 $count['max']
-            ));
+            ), 1595883556);
         }
 
         if (count($this->component->paramNodes) < $count['min']) {
@@ -24,7 +24,7 @@ class ParamCountCheck extends AbstractCheck
                 'The component has %d parameters, but at least %d are required.',
                 count($this->component->paramNodes),
                 $count['min']
-            ));
+            ), 1595883562);
         }
     }
 }

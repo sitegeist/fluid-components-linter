@@ -65,7 +65,6 @@ class LintConfiguration implements ConfigurationInterface
                         ->end()
                     ->end()
                     ->booleanNode('requireNamespaceWithoutLeadingSlash')->end()
-                    ->booleanNode('requireTypeAliases')->end()
                     ->arrayNode('typeHints')
                         ->arrayPrototype()
                             ->children()

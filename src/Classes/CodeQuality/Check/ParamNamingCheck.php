@@ -24,7 +24,7 @@ class ParamNamingCheck extends AbstractCheck
                         'Parameter does not follow naming convention "%s": %s',
                         $pattern,
                         $name
-                    ));
+                    ), 1595883599);
                 }
             }
             if (isset($extraNamingConventionsPerType[$type])) {
@@ -35,7 +35,7 @@ class ParamNamingCheck extends AbstractCheck
                             $pattern,
                             $type,
                             $name
-                        ));
+                        ), 1595883604);
                     }
                 }
             }
@@ -45,7 +45,7 @@ class ParamNamingCheck extends AbstractCheck
                     'Parameter name is too long, only %d characters are allowed: %s',
                     $nameLength['max'],
                     $name
-                ));
+                ), 1595883613);
             }
 
             if (strlen($name) < $nameLength['min']) {
@@ -53,7 +53,7 @@ class ParamNamingCheck extends AbstractCheck
                     'Parameter name is too short, at least %d characters are required: %s',
                     $nameLength['min'],
                     $name
-                ));
+                ), 1595883621);
             }
         }
 
