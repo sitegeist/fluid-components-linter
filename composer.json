@@ -30,7 +30,7 @@
         }
     },
     "bin": [
-        "bin/fclint"
+        "fclint"
     ],
     "scripts": {
         "lint": [
