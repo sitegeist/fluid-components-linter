@@ -60,7 +60,8 @@ class CodeQualityService
         $checks = [
             Check\ComponentVariablesCheck::class,
             Check\ParamNamingCheck::class,
-            Check\ParamCountCheck::class
+            Check\ParamCountCheck::class,
+            Check\ParamDescriptionCheck::class
         ];
         $results = [];
 
