@@ -16,10 +16,9 @@ class ParamDescriptionCheck extends AbstractCheck
         $results = [];
         foreach ($this->component->paramNodes as $paramNode) {
             $arguments = $paramNode->getArguments();
-            $description = $arguments['description'] ?? '';
             $type = (string) $arguments['type'];
 
-            if (trim((string) $description) !== '') {
+            if (isset($arguments['description']) && !$this->fluidService->isEmptyTextNode($arguments['description'])) {
                 continue;
             }
 
@@ -30,7 +29,7 @@ class ParamDescriptionCheck extends AbstractCheck
                 ), 1595883576);
             }
 
-            if (isset($requireDescriptionForType[$type])) {
+            if (!empty($requireDescriptionForType[$type]['requireDescription'])) {
                 $results[] = new CodeQualityException(sprintf(
                     'Missing required description for %s parameter: %s',
                     $type,

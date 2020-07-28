@@ -23,7 +23,10 @@
             "min": 0
         },
         "extraNamingConventionsPerType": {
-            "boolean": "hasBooleanPrefix"
+            "boolean": {
+                "typeValue": "boolean",
+                "namingConventions": ["hasBooleanPrefix"]
+            }
         },
         "namingConventions": ["lowerCamelCase", "noNumberSuffix"],
         "nameLength": {
@@ -32,7 +35,10 @@
         },
         "requireDescription": false,
         "requireDescriptionForType": {
-            "array": true
+            "array": {
+                "typeValue": "array",
+                "requireDescription": true
+            }
         },
         "requireNamespaceWithoutLeadingSlash": true,
         "typeHints": {

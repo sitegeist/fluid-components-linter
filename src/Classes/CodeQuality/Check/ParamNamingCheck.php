@@ -28,7 +28,7 @@ class ParamNamingCheck extends AbstractCheck
                 }
             }
             if (isset($extraNamingConventionsPerType[$type])) {
-                foreach ($extraNamingConventionsPerType[$type] as $pattern) {
+                foreach ($extraNamingConventionsPerType[$type]['namingConventions'] as $pattern) {
                     if (!preg_match($this->createPattern($pattern), $name)) {
                         $results[] = new CodeQualityException(sprintf(
                             'Parameter does not follow naming convention "%s" for type %s: %s',
