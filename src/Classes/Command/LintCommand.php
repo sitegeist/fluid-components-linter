@@ -80,7 +80,6 @@ class LintCommand extends Command
                 $section->writeln('<error>' . $message->getMessage() . '</error>');
             }
             $section->writeln(['', '']);
-
         }
 
         return ($hasValidationErrors) ? 1 : 0;

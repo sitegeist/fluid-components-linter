@@ -31,7 +31,8 @@ class ViewHelperResolver extends \TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperRes
             return parent::resolveViewHelperClassName($namespaceIdentifier, $methodIdentifier);
         } catch (ParserException $e) {
             // Redirect missing ViewHelpers to introspection placeholder
-            return sprintf('%s\\%s\\%s',
+            return sprintf(
+                '%s\\%s\\%s',
                 IntrospectionViewHelper::class,
                 $namespaceIdentifier,
                 $methodIdentifier

@@ -46,10 +46,9 @@ class DocumentationFixtureCheck extends AbstractCheck
             $results[] = new CodeQualityException('The component is missing a fixture file', 1595885707);
         }
 
-        if (
-            !$requireDocumentation
-            && $requireDocumentationWithFixtureFile
-            && $fixtureFile && !file_exists($documentationFile)
+        if (!$requireDocumentation &&
+            $requireDocumentationWithFixtureFile &&
+            $fixtureFile && !file_exists($documentationFile)
         ) {
             $results[] = new CodeQualityException(
                 'The component needs a documentation file because a fixture file is present',

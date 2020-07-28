@@ -89,6 +89,4 @@ class CodeQualityService
 
         return $results;
     }
-
-
 }
