@@ -65,18 +65,22 @@ class LintCommand extends Command
         $hasValidationErrors = false;
         foreach ($components as $componentPath) {
             $messages = $codeQualityService->validateComponent($componentPath);
-            if (!empty($messages)) {
-                $hasValidationErrors = true;
-
-                $section = $output->section();
-                $section->writeln([
-                    $componentPath,
-                    '============='
-                ]);
-                foreach ($messages as $message) {
-                    $section->writeln('<error>' . $message->getMessage() . '</error>');
-                }
+            if (empty($messages)) {
+                continue;
             }
+
+            $hasValidationErrors = true;
+
+            $section = $output->section();
+            $section->writeln([
+                str_replace(getcwd(), '', $componentPath),
+                '============='
+            ]);
+            foreach ($messages as $message) {
+                $section->writeln('<error>' . $message->getMessage() . '</error>');
+            }
+            $section->writeln(['', '']);
+
         }
 
         return ($hasValidationErrors) ? 1 : 0;
