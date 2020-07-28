@@ -125,8 +125,27 @@ class LintCommand extends Command
 
     protected function getCustomConfiguration(string $path): ?array
     {
-        // TODO read custom configuration file
-        return [];
+        if ($path === '') {
+            return null;
+        }
+
+        if (!file_exists($path)) {
+            throw new \Exception(sprintf(
+                'The specified configuration file does not exist: %s',
+                $path
+            ), 1595921202);
+        }
+
+        $configuration = json_decode(file_get_contents($path), true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new ConfigurationException(sprintf(
+                'Invalid configuration file: %s (%s)',
+                $preset,
+                json_last_error_msg()
+            ), 1595921203);
+        }
+
+        return $configuration;
     }
 
     protected function getRegisteredChecks(): array
