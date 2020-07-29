@@ -2,7 +2,7 @@
     "name": "sitegeist/fluid-components-linter",
     "description": "Tool to validate fluid components based on a specified ruleset",
     "homepage": "https://github.com/sitegeist/fluid-components-linter",
-    "license": "GPL-2.0-or-later",
+    "license": "MIT",
     "authors": [
         {
             "name": "Simon Praetorius",
