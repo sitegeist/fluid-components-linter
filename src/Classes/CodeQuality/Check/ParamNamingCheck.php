@@ -18,6 +18,19 @@ class ParamNamingCheck extends AbstractCheck
 
         $results = [];
         foreach ($params as $name => $type) {
+            if (in_array($name, $nameLength['allowed'])) {
+                continue;
+            }
+
+            if (in_array($name, $nameLength['denied'])) {
+                $results[] = new CodeQualityException(sprintf(
+                    'Parameter name is not allowed (denied names: %s): %s',
+                    implode(', ', $nameLength['denied']),
+                    $name
+                ), 1596005526);
+                continue;
+            }
+
             foreach ($globalNamingConventions as $pattern) {
                 if (!preg_match($this->createPattern($pattern), $name)) {
                     $results[] = new CodeQualityException(sprintf(
