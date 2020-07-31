@@ -23,7 +23,12 @@ class IntrospectionViewHelper extends AbstractViewHelper
 
     public function getViewhelperTag(): string
     {
-        return sprintf('<%s:%s>', $this->namespaceIdentifier, $this->methodIdentifier);
+        return '<' . $this->getViewhelperTagName() . '>';
+    }
+
+    public function getViewhelperTagName(): string
+    {
+        return sprintf('%s:%s', $this->namespaceIdentifier, $this->methodIdentifier);
     }
 
     public function validateAdditionalArguments(array $arguments)

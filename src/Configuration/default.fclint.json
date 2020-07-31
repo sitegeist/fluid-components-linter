@@ -112,107 +112,107 @@
         "requireRawContent": true,
         "viewHelperRestrictions": {
             "f:base": {
-                "viewHelperPattern": "f:base",
+                "viewHelperName": "f:base",
                 "message": "The base tag must not be used within components",
                 "level": "error"
             },
             "f:be.*": {
-                "viewHelperPattern": "f:be.*",
+                "viewHelperName": "f:be.",
                 "message": "The backend ViewHelpers should not be used within components",
                 "level": "warning"
             },
             "f:cache.*": {
-                "viewHelperPattern": "f:cache.*",
+                "viewHelperName": "f:cache.",
                 "message": "The caching ViewHelpers should not be used within components",
                 "level": "warning"
             },
             "f:cObject": {
-                "viewHelperPattern": "f:cObject",
+                "viewHelperName": "f:cObject",
                 "message": "TypoScript content must be passed as a component parameter",
                 "level": "error"
             },
             "f:debug": {
-                "viewHelperPattern": "f:debug",
+                "viewHelperName": "f:debug",
                 "message": "f:debug may be used in components, but should not be used in production",
                 "level": "notice"
             },
             "f:flashMessages": {
-                "viewHelperPattern": "f:flashMessages",
+                "viewHelperName": "f:flashMessages",
                 "message": "Flash messages must be passed as a component parameter",
                 "level": "error"
             },
             "f:form": {
-                "viewHelperPattern": "f:form",
+                "viewHelperName": "f:form",
                 "message": "Form ViewHelpers may be used deliberately within components",
                 "level": "notice"
             },
             "f:form.*": {
-                "viewHelperPattern": "f:form.*",
+                "viewHelperName": "f:form.",
                 "message": "Form ViewHelpers may be used deliberately within components",
                 "level": "notice"
             },
             "f:format.html": {
-                "viewHelperPattern": "f:format.html",
+                "viewHelperName": "f:format.html",
                 "message": "f:format.html must be used outside of the component, f:format.raw may be used within component to render HTML previously passed through f:format.html",
                 "level": "error"
             },
             "f:image": {
-                "viewHelperPattern": "f:image",
+                "viewHelperName": "f:image",
                 "message": "f:image should be used deliberately within components (e. g. only in Atom.Image)",
                 "level": "warning"
             },
             "f:inline": {
-                "viewHelperPattern": "f:inline",
+                "viewHelperName": "f:inline",
                 "message": "Inline fluid code may be used deliberately within components",
                 "level": "notice"
             },
             "f:layout": {
-                "viewHelperPattern": "f:layout",
+                "viewHelperName": "f:layout",
                 "message": "Layouts are currently not supported within components and thus must not be used",
                 "level": "error"
             },
             "f:link.*": {
-                "viewHelperPattern": "f:link.*",
+                "viewHelperName": "f:link.",
                 "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
                 "level": "error"
             },
             "f:media": {
-                "viewHelperPattern": "f:media",
+                "viewHelperName": "f:media",
                 "message": "f:media should be used deliberately within components (e. g. only in Atom.Media)",
                 "level": "warning"
             },
             "f:render": {
-                "viewHelperPattern": "f:render",
+                "viewHelperName": "f:render",
                 "message": "Rendering sections or partials is currently not supported within components and thus must not be used",
                 "level": "error"
             },
             "f:renderChildren": {
-                "viewHelperPattern": "f:renderChildren",
+                "viewHelperName": "f:renderChildren",
                 "message": "Widgets should be part of integration",
                 "level": "warning"
             },
             "f:section": {
-                "viewHelperPattern": "f:section",
+                "viewHelperName": "f:section",
                 "message": "Sections are currently not supported within components and thus must not be used",
                 "level": "error"
             },
             "f:security.*": {
-                "viewHelperPattern": "f:security.*",
+                "viewHelperName": "f:security.",
                 "message": "Frontend user logic must happen outside of components and then passed as a parameter",
                 "level": "error"
             },
             "f:translate": {
-                "viewHelperPattern": "f:translate",
+                "viewHelperName": "f:translate",
                 "message": "Translate may be used within components, try to pass translations via component parameters instead",
                 "level": "notice"
             },
             "f:uri.*": {
-                "viewHelperPattern": "f:uri.*",
+                "viewHelperName": "f:uri.",
                 "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
                 "level": "error"
             },
             "f:widget.*": {
-                "viewHelperPattern": "f:widget.*",
+                "viewHelperName": "f:widget.",
                 "message": "Widgets should be part of integration",
                 "level": "warning"
             }
