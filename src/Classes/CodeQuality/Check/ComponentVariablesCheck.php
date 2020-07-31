@@ -3,52 +3,46 @@ declare(strict_types=1);
 
 namespace Sitegeist\FluidComponentsLinter\CodeQuality\Check;
 
-use Sitegeist\FluidComponentsLinter\CodeQuality\Component;
 use Sitegeist\FluidComponentsLinter\Exception\CodeQualityException;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ObjectAccessorNode;
-use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 
 class ComponentVariablesCheck extends AbstractCheck
 {
-    protected $predefinedVariables = [
-        'settings(\.|$)',
-        'class$',
-        'content$',
-        'component\.(class|prefix|namespace)$'
-    ];
-
-    public function check(): void
+    public function check(): array
     {
-        $allowedVariables = array_merge($this->predefinedVariables, $this->generateParamNamePatterns());
-        $allowedVariablesPattern = '#^(' . implode('|', $allowedVariables) . ')#';
+        $usedVariableNames = $this->extractUsedVariables();
 
+        $results = [];
+
+        if ($this->configuration['renderer']['requireComponentPrefixer'] &&
+            !in_array('component.class', $usedVariableNames) &&
+            !in_array('component.prefix', $usedVariableNames)
+        ) {
+            $results[] = new CodeQualityException(
+                'Prefixed css classes should be used within components.',
+                1596218583
+            );
+        }
+
+        if ($this->configuration['renderer']['requireClass'] &&
+            !in_array('class', $usedVariableNames)) {
+            $results[] = new CodeQualityException(
+                'It should be possible to set additional css classes via {class} variable.',
+                1596218584
+            );
+        }
+
+        return $results;
+    }
+
+    protected function extractUsedVariables(): array
+    {
         $usedVariables = $this->fluidService->extractNodeType(
             $this->component->rootNode,
             ObjectAccessorNode::class
         );
-        $usedVariableNames = array_map(function (ObjectAccessorNode $node) {
+        return array_map(function (ObjectAccessorNode $node) {
             return $node->getObjectPath();
         }, $usedVariables);
-
-        $invalidVariables = array_filter(
-            $usedVariableNames,
-            function (string $usedVariable) use ($allowedVariablesPattern) {
-                return !preg_match($allowedVariablesPattern, $usedVariable);
-            }
-        );
-
-        if (!empty($invalidVariables)) {
-            throw new CodeQualityException(sprintf(
-                'The following variables are used in the component, but were never defined: %s',
-                '{' . implode('}, {', $invalidVariables) . '}'
-            ), 1595870402);
-        }
-    }
-
-    protected function generateParamNamePatterns(): array
-    {
-        return array_map(function (ViewHelperNode $node) {
-            return preg_quote((string) $node->getArguments()['name'], '#') . '(\.|$)';
-        }, $this->component->paramNodes);
     }
 }
