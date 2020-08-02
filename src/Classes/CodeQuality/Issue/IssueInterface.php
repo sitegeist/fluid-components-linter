@@ -11,6 +11,14 @@ interface IssueInterface
     const SEVERITY_CRITICAL = 'critical';
     const SEVERITY_BLOCKER = 'blocker';
 
+    const SEVERITIES = [
+        self::SEVERITY_INFO,
+        self::SEVERITY_MINOR,
+        self::SEVERITY_MAJOR,
+        self::SEVERITY_CRITICAL,
+        self::SEVERITY_BLOCKER
+    ];
+
     public function __construct(string $description, array $data, string $file, int $line = null, int $column = null);
     public function getCheckName(): string;
     public function getFile(): string;
