@@ -12,209 +12,243 @@
         "snakeCase": "^([a-z0-9]+_)*[a-z0-9]*$"
     },
     "component": {
-        "requireFixtureFile": false,
-        "requireFluidInsideRenderer": true,
-        "requireDocumentation": false,
-        "requireDocumentationWithFixtureFile": true
+        "requireFixtureFile": {
+            "check": false,
+            "severity": "major"
+        },
+        "requireStrictComponentStructure": {
+            "check": true,
+            "severity": "blocker"
+        },
+        "requireDocumentation": {
+            "check": false,
+            "severity": "major"
+        },
+        "requireDocumentationWithFixtureFile": {
+            "check": true,
+            "severity": "major"
+        }
     },
     "params": {
         "count": {
             "max": 20,
-            "min": 0
+            "min": 0,
+            "severity": "major"
         },
         "extraNamingConventionsPerType": {
             "boolean": {
                 "typeValue": "boolean",
-                "namingConventions": ["hasBooleanPrefix"]
+                "namingConventions": ["hasBooleanPrefix"],
+                "severity": "minor"
             }
         },
-        "namingConventions": ["lowerCamelCase", "noNumberSuffix"],
+        "generalNamingConventions": {
+            "namingConventions": ["lowerCamelCase", "noNumberSuffix"],
+            "severity": "major"
+        },
         "nameLength": {
             "min": 3,
             "max": 40,
             "allowed": ["id"],
-            "denied": ["data", "row", "rows", "result", "results", "resultset"]
+            "denied": ["data", "row", "rows", "result", "results", "resultset"],
+            "severity": "major"
         },
-        "requireDescription": false,
+        "requireDescription": {
+            "check": false,
+            "severity": "minor"
+        },
         "requireDescriptionForType": {
             "array": {
                 "typeValue": "array",
-                "requireDescription": true
+                "requireDescription": true,
+                "severity": "minor"
             }
         },
-        "requireNamespaceWithoutLeadingSlash": true,
+        "requireNamespaceWithoutLeadingSlash": {
+            "check": true,
+            "severity": "info"
+        },
         "typeHints": {
             "endsWithDateTime": {
                 "namePattern": "endsWithDateTime",
                 "typeHint": "SMS\\FluidComponents\\Domain\\Model\\DateTime",
                 "message": "It is recommended to use %s for date and time values",
-                "level": "notice"
+                "severity": "info"
             },
             "endsWithImage": {
                 "namePattern": "endsWithImage",
                 "typeHint": "Image",
                 "message": "It is recommended to use %s for images",
-                "level": "notice"
+                "severity": "info"
             },
             "endsWithNavigationMenu": {
                 "namePattern": "endsWithNavigationMenu",
                 "typeHint": "Navigation",
                 "message": "It is recommended to use %s for navigations",
-                "level": "notice"
+                "severity": "info"
             },
             "endsWithUriUrlLink": {
                 "namePattern": "endsWithUriUrlLink",
                 "typeHint": "Typolink",
                 "message": "It is recommended to use %s for urls",
-                "level": "notice"
+                "severity": "info"
             },
             "hasBooleanPrefix": {
                 "namePattern": "hasBooleanPrefix",
                 "typeHint": "boolean",
                 "message": "Based on its name, the parameter looks like a boolean",
-                "level": "notice"
+                "severity": "info"
             }
         },
         "typeRestrictions": {
             "array": {
                 "typeValue": "array",
                 "message": "It is recommended to use data structures or scalar types in combination with \"[]\" instead of generic \"%2$s\"",
-                "level": "notice"
+                "severity": "info"
             },
             "bool": {
                 "typeValue": "bool",
                 "typeRecommendation": "boolean",
                 "message": "It is recommended to use %1$s instead of %2$s",
-                "level": "notice"
+                "severity": "info"
             },
             "DateTime": {
                 "typeValue": "DateTime",
                 "typeRecommendation": "SMS\\FluidComponents\\Domain\\Model\\DateTime",
                 "message": "You should use %1$s instead of %2$s",
-                "level": "warning"
+                "severity": "minor"
             },
             "int": {
                 "typeValue": "int",
                 "typeRecommendation": "integer",
                 "message": "It is recommended to use %1$s instead of %2$s",
-                "level": "notice"
+                "severity": "info"
             },
             "object": {
                 "typeValue": "object",
                 "message": "It is recommended to use specific data structures instead of generic \"%2$s\"",
-                "level": "notice"
+                "severity": "info"
             }
         }
     },
     "renderer": {
-        "requireClass": true,
-        "requireComponentPrefixer": true,
-        "requireRawContent": true,
+        "requireClass": {
+            "check": true,
+            "severity": "minor"
+        },
+        "requireComponentPrefixer": {
+            "check": true,
+            "severity": "minor"
+        },
+        "requireRawContent": {
+            "check": true,
+            "severity": "minor"
+        },
         "viewHelperRestrictions": {
             "f:base": {
                 "viewHelperName": "f:base",
                 "message": "The base tag must not be used within components",
-                "level": "error"
+                "severity": "major"
             },
             "f:be.*": {
                 "viewHelperName": "f:be.",
                 "message": "The backend ViewHelpers should not be used within components",
-                "level": "warning"
+                "severity": "minor"
             },
             "f:cache.*": {
                 "viewHelperName": "f:cache.",
                 "message": "The caching ViewHelpers should not be used within components",
-                "level": "warning"
+                "severity": "minor"
             },
             "f:cObject": {
                 "viewHelperName": "f:cObject",
                 "message": "TypoScript content must be passed as a component parameter",
-                "level": "error"
+                "severity": "major"
             },
             "f:debug": {
                 "viewHelperName": "f:debug",
                 "message": "f:debug may be used in components, but should not be used in production",
-                "level": "notice"
+                "severity": "info"
             },
             "f:flashMessages": {
                 "viewHelperName": "f:flashMessages",
                 "message": "Flash messages must be passed as a component parameter",
-                "level": "error"
+                "severity": "major"
             },
             "f:form": {
                 "viewHelperName": "f:form",
                 "message": "Form ViewHelpers may be used deliberately within components",
-                "level": "notice"
+                "severity": "info"
             },
             "f:form.*": {
                 "viewHelperName": "f:form.",
                 "message": "Form ViewHelpers may be used deliberately within components",
-                "level": "notice"
+                "severity": "info"
             },
             "f:format.html": {
                 "viewHelperName": "f:format.html",
                 "message": "f:format.html must be used outside of the component, f:format.raw may be used within component to render HTML previously passed through f:format.html",
-                "level": "error"
+                "severity": "major"
             },
             "f:image": {
                 "viewHelperName": "f:image",
                 "message": "f:image should be used deliberately within components (e. g. only in Atom.Image)",
-                "level": "warning"
+                "severity": "minor"
             },
             "f:inline": {
                 "viewHelperName": "f:inline",
                 "message": "Inline fluid code may be used deliberately within components",
-                "level": "notice"
+                "severity": "info"
             },
             "f:layout": {
                 "viewHelperName": "f:layout",
                 "message": "Layouts are currently not supported within components and thus must not be used",
-                "level": "error"
+                "severity": "major"
             },
             "f:link.*": {
                 "viewHelperName": "f:link.",
                 "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
-                "level": "error"
+                "severity": "major"
             },
             "f:media": {
                 "viewHelperName": "f:media",
                 "message": "f:media should be used deliberately within components (e. g. only in Atom.Media)",
-                "level": "warning"
+                "severity": "minor"
             },
             "f:render": {
                 "viewHelperName": "f:render",
                 "message": "Rendering sections or partials is currently not supported within components and thus must not be used",
-                "level": "error"
+                "severity": "major"
             },
             "f:renderChildren": {
                 "viewHelperName": "f:renderChildren",
                 "message": "Widgets should be part of integration",
-                "level": "warning"
+                "severity": "minor"
             },
             "f:section": {
                 "viewHelperName": "f:section",
                 "message": "Sections are currently not supported within components and thus must not be used",
-                "level": "error"
+                "severity": "major"
             },
             "f:security.*": {
                 "viewHelperName": "f:security.",
                 "message": "Frontend user logic must happen outside of components and then passed as a parameter",
-                "level": "error"
+                "severity": "major"
             },
             "f:translate": {
                 "viewHelperName": "f:translate",
                 "message": "Translate may be used within components, try to pass translations via component parameters instead",
-                "level": "notice"
+                "severity": "info"
             },
             "f:uri.*": {
                 "viewHelperName": "f:uri.",
                 "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
-                "level": "error"
+                "severity": "major"
             },
             "f:widget.*": {
                 "viewHelperName": "f:widget.",
                 "message": "Widgets should be part of integration",
-                "level": "warning"
+                "severity": "minor"
             }
         }
     }

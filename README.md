@@ -48,7 +48,9 @@ you would use the following configuration file:
 ```json
 {
     "component": {
-        "requireDocumentationWithFixtureFile": false
+        "requireDocumentationWithFixtureFile": {
+            "check": false
+        }
     },
     "params": {
         "nameLength": {

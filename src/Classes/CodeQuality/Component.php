@@ -24,7 +24,7 @@ class Component
 
     public function __construct(string $path, RootNode $node, bool $useStrictSyntax = false)
     {
-        $this->path = $path;
+        $this->path = realpath($path);
         $this->rootNode = $node;
         $this->fluidService = new FluidService;
 

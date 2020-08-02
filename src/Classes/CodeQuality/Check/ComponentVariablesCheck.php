@@ -12,27 +12,24 @@ class ComponentVariablesCheck extends AbstractCheck
     {
         $usedVariableNames = $this->extractUsedVariables();
 
-        $results = [];
+        $issues = [];
 
-        if ($this->configuration['renderer']['requireComponentPrefixer'] &&
+        if ($this->configuration['renderer']['requireComponentPrefixer']['check'] &&
             !in_array('component.class', $usedVariableNames) &&
             !in_array('component.prefix', $usedVariableNames)
         ) {
-            $results[] = new CodeQualityException(
-                'Prefixed css classes should be used within components.',
-                1596218583
-            );
+
+            $issues[] = $this->issue('Prefixed css classes should be used within components.')
+                ->setSeverity($this->configuration['renderer']['requireComponentPrefixer']['severity']);
         }
 
-        if ($this->configuration['renderer']['requireClass'] &&
+        if ($this->configuration['renderer']['requireClass']['check'] &&
             !in_array('class', $usedVariableNames)) {
-            $results[] = new CodeQualityException(
-                'It should be possible to set additional css classes via {class} variable.',
-                1596218584
-            );
+            $issues[] = $this->issue('It should be possible to set additional css classes via {class} variable.')
+                ->setSeverity($this->configuration['renderer']['requireClass']['severity']);
         }
 
-        return $results;
+        return $issues;
     }
 
     protected function extractUsedVariables(): array

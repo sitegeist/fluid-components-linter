@@ -13,7 +13,7 @@ class ParamDescriptionCheck extends AbstractCheck
         $requireDescriptionGlobal = $this->configuration['params']['requireDescription'];
         $requireDescriptionForType = $this->configuration['params']['requireDescriptionForType'];
 
-        $results = [];
+        $issues = [];
         foreach ($this->component->paramNodes as $paramNode) {
             $arguments = $paramNode->getArguments();
             $type = (string) $arguments['type'];
@@ -22,22 +22,20 @@ class ParamDescriptionCheck extends AbstractCheck
                 continue;
             }
 
-            if ($requireDescriptionGlobal) {
-                $results[] = new CodeQualityException(sprintf(
-                    'Missing required description for parameter: %s',
+            if ($requireDescriptionGlobal['check']) {
+                $issues[] = $this->issue('Missing required description for parameter: %s', [
                     $arguments['name']
-                ), 1595883576);
+                ])->setSeverity($requireDescriptionGlobal['severity']);
             }
 
             if (!empty($requireDescriptionForType[$type]['requireDescription'])) {
-                $results[] = new CodeQualityException(sprintf(
-                    'Missing required description for %s parameter: %s',
+                $issues[] = $this->issue('Missing required description for %s parameter: %s', [
                     $type,
                     $arguments['name']
-                ), 1595883578);
+                ])->setSeverity($requireDescriptionForType[$type]['severity']);
             }
         }
 
-        return $results;
+        return $issues;
     }
 }

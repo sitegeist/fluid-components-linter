@@ -25,15 +25,16 @@ class DocumentationFixtureCheck extends AbstractCheck
         $directory = dirname($this->component->path);
         $name = basename($this->component->path, $this->componentExtension);
 
-        $results = [];
+        $issues = [];
 
         $documentationFile = sprintf($this->documentationFile, $directory, $name);
-        if ($requireDocumentation && !file_exists($documentationFile)) {
-            $results[] = new CodeQualityException('The component is missing a documentation file', 1595885141);
+        if ($requireDocumentation['check'] && !file_exists($documentationFile)) {
+            $issues[] = $this->issue('The component is missing a documentation file')
+                ->setSeverity($requireDocumentation['severity']);
         }
 
-        if (!$requireFixtureFile && !$requireDocumentationWithFixtureFile) {
-            return $results;
+        if (!$requireFixtureFile['check'] && !$requireDocumentationWithFixtureFile['check']) {
+            return $issues;
         }
 
         $fixtureFiles = array_map(function ($fixtureFile) use ($directory, $name) {
@@ -42,20 +43,19 @@ class DocumentationFixtureCheck extends AbstractCheck
         $fixtureFile = array_filter($fixtureFiles, 'file_exists');
         $fixtureFile = reset($fixtureFile);
 
-        if ($requireFixtureFile && !$fixtureFile) {
-            $results[] = new CodeQualityException('The component is missing a fixture file', 1595885707);
+        if ($requireFixtureFile['check'] && !$fixtureFile) {
+            $issues[] = $this->issue('The component is missing a fixture file')
+                ->setSeverity($requireFixtureFile['severity']);
         }
 
-        if (!$requireDocumentation &&
-            $requireDocumentationWithFixtureFile &&
+        if (!$requireDocumentation['check'] &&
+            $requireDocumentationWithFixtureFile['check'] &&
             $fixtureFile && !file_exists($documentationFile)
         ) {
-            $results[] = new CodeQualityException(
-                'The component needs a documentation file because a fixture file is present',
-                1595885708
-            );
+            $issues[] = $this->issue('The component needs a documentation file because a fixture file is present')
+                ->setSeverity($requireDocumentationWithFixtureFile['severity']);
         }
 
-        return $results;
+        return $issues;
     }
 }

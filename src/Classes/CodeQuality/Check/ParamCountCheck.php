@@ -7,24 +7,26 @@ use Sitegeist\FluidComponentsLinter\Exception\CodeQualityException;
 
 class ParamCountCheck extends AbstractCheck
 {
-    public function check(): void
+    public function check(): array
     {
+        $this->setDefaultSeverity($this->configuration['params']['count']['severity']);
         $count = $this->configuration['params']['count'];
+        $issues = [];
 
         if (count($this->component->paramNodes) > $count['max']) {
-            throw new CodeQualityException(sprintf(
-                'The component has %d parameters, but only %d are allowed.',
+            $issues[] = $this->issue('The component has %d parameters, but only %d are allowed.', [
                 count($this->component->paramNodes),
                 $count['max']
-            ), 1595883556);
+            ]);
         }
 
         if (count($this->component->paramNodes) < $count['min']) {
-            throw new CodeQualityException(sprintf(
-                'The component has %d parameters, but at least %d are required.',
+            $issues[] = $this->issue('The component has %d parameters, but at least %d are required.', [
                 count($this->component->paramNodes),
                 $count['min']
-            ), 1595883562);
+            ]);
         }
+
+        return $issues;
     }
 }

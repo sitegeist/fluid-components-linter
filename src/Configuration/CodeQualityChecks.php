@@ -3,11 +3,11 @@
 use Sitegeist\FluidComponentsLinter\CodeQuality\Check;
 
 return [
-    Check\ComponentVariablesCheck::class,
+    Check\DocumentationFixtureCheck::class,
     Check\ParamNamingCheck::class,
     Check\ParamCountCheck::class,
-    Check\ParamDescriptionCheck::class,
     Check\ParamTypeNamespaceCheck::class,
-    Check\DocumentationFixtureCheck::class,
+    Check\ParamDescriptionCheck::class,
+    Check\ComponentVariablesCheck::class,
     Check\ViewHelpersCheck::class,
 ];

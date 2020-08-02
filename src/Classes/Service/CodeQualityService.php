@@ -5,8 +5,11 @@ namespace Sitegeist\FluidComponentsLinter\Service;
 
 use Sitegeist\FluidComponentsLinter\CodeQuality\Check\CheckInterface;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Component;
+use Sitegeist\FluidComponentsLinter\CodeQuality\Issue\Issue;
+use Sitegeist\FluidComponentsLinter\CodeQuality\Issue\IssueInterface;
 use Sitegeist\FluidComponentsLinter\Exception\CodeQualityException;
 use Sitegeist\FluidComponentsLinter\Exception\ComponentStructureException;
+use Sitegeist\FluidComponentsLinter\Exception\StrictComponentStructureException;
 use Sitegeist\FluidComponentsLinter\Fluid\ViewHelper\ViewHelperResolver;
 use TYPO3Fluid\Fluid\View\TemplateView;
 
@@ -60,7 +63,9 @@ class CodeQualityService
                 $path
             );
         } catch (\TYPO3Fluid\Fluid\Core\Parser\Exception $e) {
-            return [$e];
+            preg_match('#in template .+, line ([0-9]+) at character ([0-9]+).#', $e->getMessage(), $matches);
+            $issue = $this->blocker($e->getMessage(), $path, (int) $matches[1], (int) $matches[2]);
+            return [$issue];
         }
 
         // Validate and extract basic component structure
@@ -68,25 +73,28 @@ class CodeQualityService
             $component = new Component(
                 $path,
                 $parsedTemplate->getRootNode(),
-                $this->configuration['component']['requireFluidInsideRenderer']
+                $this->configuration['component']['requireStrictComponentStructure']['check']
             );
         } catch (ComponentStructureException $e) {
-            return [$e];
+            $issue = $this->blocker($e->getMessage(), $path);
+            return [$issue];
         }
 
-        $results = [];
+        $issues = [];
         foreach ($this->checks as $checkClassName) {
-            $check = new $checkClassName($component, $this->configuration);
-            try {
-                $checkResults = $check->check();
-                if (is_array($checkResults)) {
-                    $results = array_merge($results, $checkResults);
-                }
-            } catch (CodeQualityException $e) {
-                $results[] = $e;
-            }
+            $checkObject = new $checkClassName($component, $this->configuration);
+            $issues = array_merge(
+                $issues,
+                $checkObject->check()
+            );
         }
 
-        return $results;
+        return $issues;
+    }
+
+    protected function blocker(string $message, string $path, int $line = null, int $column = null): Issue
+    {
+        $issue = new Issue($message, [], $path, $line, $column);
+        return $issue->setSeverity(IssueInterface::SEVERITY_BLOCKER);
     }
 }

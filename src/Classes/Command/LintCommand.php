@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace Sitegeist\FluidComponentsLinter\Command;
 
+use Sitegeist\FluidComponentsLinter\CodeQuality\Issue\Issue;
+use Sitegeist\FluidComponentsLinter\CodeQuality\Output\GroupedOutput;
+use Sitegeist\FluidComponentsLinter\CodeQuality\Output\JsonOutput;
 use Sitegeist\FluidComponentsLinter\Configuration\LintConfiguration;
 use Sitegeist\FluidComponentsLinter\Exception\ConfigurationException;
 use Sitegeist\FluidComponentsLinter\Service\CodeQualityService;
@@ -45,6 +48,12 @@ class LintCommand extends Command
                 'c',
                 InputOption::VALUE_OPTIONAL,
                 'Path to custom configuration file'
+            )
+            ->addOption(
+                'json',
+                null,
+                InputOption::VALUE_NONE,
+                'Output results as json (compatible to codeclimate spec)'
             );
     }
 
@@ -62,27 +71,21 @@ class LintCommand extends Command
         );
 
         $codeQualityService = new CodeQualityService($configuration, $this->getRegisteredChecks());
-        $hasValidationErrors = false;
+        $issues = [];
         foreach ($components as $componentPath) {
-            $messages = $codeQualityService->validateComponent($componentPath);
-            if (empty($messages)) {
-                continue;
-            }
-
-            $hasValidationErrors = true;
-
-            $section = $output->section();
-            $section->writeln([
-                str_replace(getcwd(), '', $componentPath),
-                '============='
-            ]);
-            foreach ($messages as $message) {
-                $section->writeln('<error>' . $message->getMessage() . '</error>');
-            }
-            $section->writeln(['', '']);
+            $issues = array_merge(
+                $issues,
+                $codeQualityService->validateComponent($componentPath)
+            );
         }
 
-        return ($hasValidationErrors) ? 1 : 0;
+        if ($input->getOption('json')) {
+            JsonOutput::output($output, $issues);
+        } else {
+            GroupedOutput::output($output, $issues);
+        }
+
+        return (!empty($results)) ? 1 : 0;
     }
 
     protected function getFinalConfiguration(?string $configurationPreset, ?string $configurationFile): array

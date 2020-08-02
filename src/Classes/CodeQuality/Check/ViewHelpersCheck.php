@@ -10,36 +10,47 @@ use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 
 class ViewHelpersCheck extends AbstractCheck
 {
-    public function check(): void
+    public function check(): array
     {
-        $viewHelperPattern = $this->generateRestrictedViewHelpersPattern();
+        $viewHelperPatterns = $this->generateRestrictedViewHelpersPattern();
+        $usedViewHelpers = $this->extractUsedViewHelpers();
 
-        $invalidViewHelpers = array_filter(
-            $this->extractUsedViewHelpers(),
-            function (string $tagName) use ($viewHelperPattern) {
-                return (bool) preg_match($viewHelperPattern, $tagName);
+        $issues = [];
+        foreach ($viewHelperPatterns as $severity => $pattern) {
+            $invalidViewHelpers = array_filter($usedViewHelpers, function (string $tagName) use ($pattern) {
+                return (bool) preg_match($pattern, $tagName);
+            });
+
+            if (!empty($invalidViewHelpers)) {
+                $issues[] = $this->issue(
+                    'The following ViewHelpers are used in the renderer, but are not permitted: %s',
+                    ['<' . implode('>, <', $invalidViewHelpers) . '>']
+                )->setSeverity($severity);
             }
-        );
-
-        if (!empty($invalidViewHelpers)) {
-            throw new CodeQualityException(sprintf(
-                'The following ViewHelpers are used in the renderer, but are not permitted: %s',
-                '<' . implode('>, <', $invalidViewHelpers) . '>'
-            ), 1596220321);
         }
+
+        return $issues;
     }
 
-    protected function generateRestrictedViewHelpersPattern(): string
+    protected function generateRestrictedViewHelpersPattern(): array
     {
-        $viewHelperRestrictions = array_map(function (array $config) {
-            $pattern = preg_quote($config['viewHelperName'], '#');
+        $severities = [];
+        foreach ($this->configuration['renderer']['viewHelperRestrictions'] as $restriction) {
+            $pattern = preg_quote($restriction['viewHelperName'], '#');
             // Match group of ViewHelpers?
-            if (substr($config['viewHelperName'], -1, 1) !== '.') {
+            if (substr($restriction['viewHelperName'], -1, 1) !== '.') {
                 $pattern .= '$';
             }
-            return $pattern;
-        }, $this->configuration['renderer']['viewHelperRestrictions']);
-        return '#^(' . implode('|', $viewHelperRestrictions) . ')#';
+
+            if (!isset($severities[$restriction['severity']])) {
+                $severities[$restriction['severity']] = [];
+            }
+            $severities[$restriction['severity']][] = $pattern;
+        }
+
+        return array_map(function ($patterns) {
+            return '#^(' . implode('|', $patterns) . ')#';
+        }, $severities);
     }
 
     protected function extractUsedViewHelpers(): array
