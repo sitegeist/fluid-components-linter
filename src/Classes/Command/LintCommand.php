@@ -173,7 +173,7 @@ class LintCommand extends Command
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new ConfigurationException(sprintf(
                 'Invalid configuration file: %s (%s)',
-                $preset,
+                $path,
                 json_last_error_msg()
             ), 1595921203);
         }
