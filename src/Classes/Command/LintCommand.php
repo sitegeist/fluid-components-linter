@@ -10,6 +10,7 @@ use Sitegeist\FluidComponentsLinter\Configuration\LintConfiguration;
 use Sitegeist\FluidComponentsLinter\Exception\ConfigurationException;
 use Sitegeist\FluidComponentsLinter\Service\CodeQualityService;
 use Sitegeist\FluidComponentsLinter\Service\ComponentService;
+use Sitegeist\FluidComponentsLinter\Service\ConfigurationService;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -80,10 +81,12 @@ class LintCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $configuration = $this->getFinalConfiguration(
+            $configurationService = new ConfigurationService;
+            $configuration = $configurationService->getFinalConfiguration(
                 $input->getOption('preset'),
                 $input->getOption('config')
             );
+            $registeredChecks = $configurationService->getRegisteredChecks();
 
             $componentService = new ComponentService;
             $components = $componentService->findComponentsInPaths(
@@ -91,7 +94,7 @@ class LintCommand extends Command
                 $input->getOption('extension')
             );
 
-            $codeQualityService = new CodeQualityService($configuration, $this->getRegisteredChecks());
+            $codeQualityService = new CodeQualityService($configuration, $registeredChecks);
             $issues = [];
             foreach ($components as $componentPath) {
                 $issues = array_merge(
@@ -145,72 +148,5 @@ class LintCommand extends Command
             $skipSeverities[] = $severity;
         }
         return $skipSeverities;
-    }
-
-    protected function getFinalConfiguration($configurationPreset, $configurationFile): array
-    {
-        $configurationParts = [
-            $this->getPresetConfiguration('default'),
-            ($configurationPreset !== false) ? $this->getPresetConfiguration($configurationPreset) : [],
-            ($configurationFile !== false) ? $this->getCustomConfiguration($configurationFile) : []
-        ];
-
-        $processor = new Processor();
-        return $processor->processConfiguration(
-            new LintConfiguration,
-            $configurationParts
-        );
-    }
-
-    protected function getPresetConfiguration(string $preset): array
-    {
-        $path = sprintf(__DIR__ . '/../../Configuration/%s.fclint.json', $preset);
-        if (!file_exists($path)) {
-            throw new ConfigurationException(sprintf(
-                'Invalid configuration preset: %s',
-                $preset
-            ), 1595789341);
-        }
-
-        $configuration = json_decode(file_get_contents($path), true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new ConfigurationException(sprintf(
-                'Invalid configuration preset file: %s (%s)',
-                $preset,
-                json_last_error_msg()
-            ), 1595789342);
-        }
-
-        return $configuration;
-    }
-
-    protected function getCustomConfiguration(string $path): ?array
-    {
-        if ($path === '') {
-            return null;
-        }
-
-        if (!file_exists($path)) {
-            throw new \Exception(sprintf(
-                'The specified configuration file does not exist: %s',
-                $path
-            ), 1595921202);
-        }
-
-        $configuration = json_decode(file_get_contents($path), true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new ConfigurationException(sprintf(
-                'Invalid configuration file: %s (%s)',
-                $path,
-                json_last_error_msg()
-            ), 1595921203);
-        }
-
-        return $configuration;
-    }
-
-    protected function getRegisteredChecks(): array
-    {
-        return require(__DIR__ . '/../../Configuration/CodeQualityChecks.php');
     }
 }
