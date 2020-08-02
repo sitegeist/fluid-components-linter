@@ -11,7 +11,7 @@ interface IssueInterface
     const SEVERITY_CRITICAL = 'critical';
     const SEVERITY_BLOCKER = 'blocker';
 
-    public function __construct(string $description, array $data = [], string $file, int $line = null, int $column = null);
+    public function __construct(string $description, array $data, string $file, int $line = null, int $column = null);
     public function getCheckName(): string;
     public function getFile(): string;
     public function getLine(): ?int;

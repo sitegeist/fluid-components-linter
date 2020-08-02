@@ -18,7 +18,6 @@ class ComponentVariablesCheck extends AbstractCheck
             !in_array('component.class', $usedVariableNames) &&
             !in_array('component.prefix', $usedVariableNames)
         ) {
-
             $issues[] = $this->issue('Prefixed css classes should be used within components.')
                 ->setSeverity($this->configuration['renderer']['requireComponentPrefixer']['severity']);
         }

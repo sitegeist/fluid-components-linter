@@ -16,7 +16,7 @@ class Issue implements IssueInterface
     protected $line = null;
     protected $column = null;
 
-    public function __construct(string $description, array $data = [], string $file, int $line = null, int $column = null)
+    public function __construct(string $description, array $data, string $file, int $line = null, int $column = null)
     {
         $this->description = $description;
         $this->data = $data;
