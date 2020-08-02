@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Symfony\Component\Console\Application;
 use Sitegeist\FluidComponentsLinter\Command\LintCommand;
+use Sitegeist\FluidComponentsLinter\Command\DocumentationCommand;
 
 call_user_func(function () {
     // Check for valid autoload configuration
@@ -24,5 +25,6 @@ call_user_func(function () {
     // Setup console application
     $application = new Application();
     $application->add(new LintCommand());
+    $application->add(new DocumentationCommand());
     $application->run();
 });
