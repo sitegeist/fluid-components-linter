@@ -9,5 +9,6 @@ return [
     Check\ParamTypeNamespaceCheck::class,
     Check\ParamDescriptionCheck::class,
     Check\ComponentVariablesCheck::class,
+    Check\ContentVariableCheck::class,
     Check\ViewHelpersCheck::class,
 ];
