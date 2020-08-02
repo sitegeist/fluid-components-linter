@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Sitegeist\FluidComponentsLinter\CodeQuality\Check;
 
-use Sitegeist\FluidComponentsLinter\CodeQuality\Component;
-use Sitegeist\FluidComponentsLinter\Exception\CodeQualityException;
 use Sitegeist\FluidComponentsLinter\ViewHelpers\IntrospectionViewHelper;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 

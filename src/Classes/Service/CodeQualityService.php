@@ -7,9 +7,7 @@ use Sitegeist\FluidComponentsLinter\CodeQuality\Check\CheckInterface;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Component;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Issue\Issue;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Issue\IssueInterface;
-use Sitegeist\FluidComponentsLinter\Exception\CodeQualityException;
 use Sitegeist\FluidComponentsLinter\Exception\ComponentStructureException;
-use Sitegeist\FluidComponentsLinter\Exception\StrictComponentStructureException;
 use Sitegeist\FluidComponentsLinter\Fluid\ViewHelper\ViewHelperResolver;
 use TYPO3Fluid\Fluid\View\TemplateView;
 

@@ -17,7 +17,6 @@ interface CheckInterface
      * Performs a code quality check on the component
      * If the check fails, the method returns an array of issues
      *
-     * @throws \Sitegeist\FluidComponentsLinter\Exception\CodeQualityException
      * @return \Sitegeist\FluidComponentsLinter\CodeQuality\Issue\Issue[]
      */
     public function check(): array;

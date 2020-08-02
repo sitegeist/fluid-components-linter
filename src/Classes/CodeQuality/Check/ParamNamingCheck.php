@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Sitegeist\FluidComponentsLinter\CodeQuality\Check;
 
-use Sitegeist\FluidComponentsLinter\Exception\CodeQualityException;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 
 class ParamNamingCheck extends AbstractCheck

@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Sitegeist\FluidComponentsLinter\CodeQuality\Check;
 
-use Sitegeist\FluidComponentsLinter\Exception\CodeQualityException;
-
 class ParamCountCheck extends AbstractCheck
 {
     public function check(): array

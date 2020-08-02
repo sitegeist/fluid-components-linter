@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Sitegeist\FluidComponentsLinter\CodeQuality\Check;
 
-use Sitegeist\FluidComponentsLinter\Exception\CodeQualityException;
-
 class DocumentationFixtureCheck extends AbstractCheck
 {
     protected $fixtureFiles = [
