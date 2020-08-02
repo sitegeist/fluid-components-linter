@@ -11,6 +11,9 @@ interface IssueInterface
     const SEVERITY_CRITICAL = 'critical';
     const SEVERITY_BLOCKER = 'blocker';
 
+    /**
+     * Ordered list of severities based on their... severity
+     */
     const SEVERITIES = [
         self::SEVERITY_INFO,
         self::SEVERITY_MINOR,

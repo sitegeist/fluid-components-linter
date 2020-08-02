@@ -52,13 +52,22 @@ class LintCommand extends Command
                 'preset',
                 'p',
                 InputOption::VALUE_OPTIONAL,
-                'Name of configuration preset'
+                'Name of configuration preset',
+                false
             )
             ->addOption(
                 'config',
                 'c',
                 InputOption::VALUE_OPTIONAL,
-                'Path to custom configuration file'
+                'Path to custom configuration file',
+                false
+            )
+            ->addOption(
+                'severity',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Minimum severity, all issues below this severity will be skipped',
+                IssueInterface::SEVERITY_INFO
             )
             ->addOption(
                 'json',
@@ -91,6 +100,13 @@ class LintCommand extends Command
                 );
             }
 
+            $skipSeverities = $this->determineSeveritiesToSkip($input->getOption('severity'));
+            if (!empty($skipSeverities)) {
+                $issues = array_filter($issues, function (IssueInterface $issue) use ($skipSeverities) {
+                    return !in_array($issue->getSeverity(), $skipSeverities);
+                });
+            }
+
             if ($input->getOption('json')) {
                 JsonOutput::output($output, $issues);
             } else {
@@ -112,19 +128,31 @@ class LintCommand extends Command
     protected function determineExitStatus(array $issues): int
     {
         foreach ($issues as $issue) {
-            if (in_array($issue->getSeverity, $this->fatalSeverities)) {
+            if (in_array($issue->getSeverity(), $this->fatalSeverities)) {
                 return 1;
             }
         }
         return 0;
     }
 
-    protected function getFinalConfiguration(?string $configurationPreset, ?string $configurationFile): array
+    protected function determineSeveritiesToSkip(string $minSeverity)
+    {
+        $skipSeverities = [];
+        foreach (IssueInterface::SEVERITIES as $severity) {
+            if ($minSeverity === $severity) {
+                break;
+            }
+            $skipSeverities[] = $severity;
+        }
+        return $skipSeverities;
+    }
+
+    protected function getFinalConfiguration($configurationPreset, $configurationFile): array
     {
         $configurationParts = [
             $this->getPresetConfiguration('default'),
-            (isset($configurationPreset)) ? $this->getPresetConfiguration($configurationPreset) : [],
-            (isset($configurationFile)) ? $this->getCustomConfiguration($configurationFile) : []
+            ($configurationPreset !== false) ? $this->getPresetConfiguration($configurationPreset) : [],
+            ($configurationFile !== false) ? $this->getCustomConfiguration($configurationFile) : []
         ];
 
         $processor = new Processor();
