@@ -14,6 +14,9 @@ code quality.
 * enforce parameter descriptions
 * enforce presence of markdown documentation and fixture files used by Fluid Styleguide
 * normalize syntax of namespaces in parameter type
+* enforce that component prefixer and `class` param are used
+* enforce that certain ViewHelpers can't be used inside components
+* enforce that `content` param is always wrapped in `<f:format.raw>`
 
 see [CodeQualityChecks.php](./src/Configuration/CodeQualityChecks.php)
 
