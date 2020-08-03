@@ -11,11 +11,11 @@ class GroupedOutput implements OutputInterface
 {
     protected static $fileTemplate = '<fg=black;bg=white;options=bold>%s</>';
     protected static $templates = [
-        IssueInterface::SEVERITY_INFO => '%4d  %s',
-        IssueInterface::SEVERITY_MINOR => '%4d  <fg=yellow;options=bold>%s</>',
-        IssueInterface::SEVERITY_MAJOR => '%4d  <fg=red;options=bold>%s</>',
-        IssueInterface::SEVERITY_CRITICAL => '%4d  <fg=white;bg=red;options=bold>%s</>',
-        IssueInterface::SEVERITY_BLOCKER => '%4d  <fg=white;bg=red;options=bold>%s</>',
+        IssueInterface::SEVERITY_INFO => '%4d  INFO: %s',
+        IssueInterface::SEVERITY_MINOR => '%4d  <fg=yellow;options=bold>MINOR: %s</>',
+        IssueInterface::SEVERITY_MAJOR => '%4d  <fg=red;options=bold>MAJOR: %s</>',
+        IssueInterface::SEVERITY_CRITICAL => '%4d  <fg=white;bg=red;options=bold>CRITICAL: %s</>',
+        IssueInterface::SEVERITY_BLOCKER => '%4d  <fg=white;bg=red;options=bold>BLOCKER: %s</>',
     ];
 
     public static function output(ConsoleOutput $output, array $issues): void
@@ -39,7 +39,7 @@ class GroupedOutput implements OutputInterface
         foreach ($groupedIssues as $file => $severities) {
             $section = $output->section();
             $section->writeln([
-                '',
+                ' ',
                 sprintf(self::$fileTemplate, str_replace(getcwd() . '/', '', $file)),
                 '============='
             ]);
@@ -53,7 +53,7 @@ class GroupedOutput implements OutputInterface
                     ));
                 }
             }
-            $section->writeln(['']);
+            $section->writeln([' ']);
         }
     }
 }
