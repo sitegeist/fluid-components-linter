@@ -240,10 +240,40 @@
                 "message": "Translate may be used within components, try to pass translations via component parameters instead",
                 "severity": "info"
             },
-            "f:uri.*": {
-                "viewHelperName": "f:uri.",
+            "f:uri.action": {
+                "viewHelperName": "f:uri.action",
                 "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
                 "severity": "major"
+            },
+            "f:uri.email": {
+                "viewHelperName": "f:uri.email",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "severity": "major"
+            },
+            "f:uri.external": {
+                "viewHelperName": "f:uri.external",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "severity": "major"
+            },
+            "f:uri.page": {
+                "viewHelperName": "f:uri.page",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "severity": "major"
+            },
+            "f:uri.resource": {
+                "viewHelperName": "f:uri.resource",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "severity": "major"
+            },
+            "f:uri.typolink": {
+                "viewHelperName": "f:uri.typolink",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "severity": "major"
+            },
+            "f:uri.image": {
+                "viewHelperName": "f:uri.image",
+                "message": "f:uri.image should be used deliberately within components (e. g. only in Atom.Image)",
+                "severity": "minor"
             },
             "f:widget.*": {
                 "viewHelperName": "f:widget.",
