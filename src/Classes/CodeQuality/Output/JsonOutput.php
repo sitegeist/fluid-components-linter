@@ -14,12 +14,16 @@ class JsonOutput implements OutputInterface
             $lines = $positions = null;
             if ($issue->getLine()) {
                 if ($issue->getColumn()) {
+                    $lines = [
+                        'begin' => $issue->getLine(),
+                        'end' => $issue->getLine()
+                    ];
                     $positions = [
                         'begin' => [
                             'line' => $issue->getLine(),
                             'column' => $issue->getColumn()
                         ]
-                        ];
+                    ];
                 } else {
                     $lines = [
                         'begin' => $issue->getLine(),
