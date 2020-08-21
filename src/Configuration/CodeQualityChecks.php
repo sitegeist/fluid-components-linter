@@ -7,6 +7,7 @@ return [
     Check\ParamNamingCheck::class,
     Check\ParamCountCheck::class,
     Check\ParamTypeNamespaceCheck::class,
+    Check\ParamTypeCheck::class,
     Check\ParamDescriptionCheck::class,
     Check\ComponentVariablesCheck::class,
     Check\ContentVariableCheck::class,

@@ -1,7 +1,7 @@
 {
     "_patterns": {
         "hasBooleanPrefix": "^(is|has|show|hide)",
-        "endsWithDateTime": "([Dd]ate|[Ttime])$",
+        "endsWithDateTime": "([Dd]ate|[Tt]ime)$",
         "endsWithImage": "[Ii]m(age|g)$",
         "endsWithNavigationMenu": "([Nn]av(igation)?|[Mm]enu)$",
         "endsWithUriUrlLink": "([Uu]r[il]|[Ll]ink)$",
@@ -100,7 +100,7 @@
                 "severity": "info"
             }
         },
-        "typeRestrictions": {
+        "typeAlternatives": {
             "array": {
                 "typeValue": "array",
                 "message": "It is recommended to use data structures or scalar types in combination with \"[]\" instead of generic \"%2$s\"",
@@ -108,19 +108,19 @@
             },
             "bool": {
                 "typeValue": "bool",
-                "typeRecommendation": "boolean",
+                "typeAlternative": "boolean",
                 "message": "It is recommended to use %1$s instead of %2$s",
                 "severity": "info"
             },
             "DateTime": {
                 "typeValue": "DateTime",
-                "typeRecommendation": "SMS\\FluidComponents\\Domain\\Model\\DateTime",
+                "typeAlternative": "SMS\\FluidComponents\\Domain\\Model\\DateTime",
                 "message": "You should use %1$s instead of %2$s",
                 "severity": "minor"
             },
             "int": {
                 "typeValue": "int",
-                "typeRecommendation": "integer",
+                "typeAlternative": "integer",
                 "message": "It is recommended to use %1$s instead of %2$s",
                 "severity": "info"
             },
