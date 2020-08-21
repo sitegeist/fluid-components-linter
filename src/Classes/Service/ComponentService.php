@@ -74,7 +74,7 @@ class ComponentService
             // Continue recursively
             $components = array_merge(
                 $components,
-                $this->scanForComponents($componentPath, $ext, $this->scannedPaths)
+                $this->scanForComponents($componentPath, $ext)
             );
         }
 

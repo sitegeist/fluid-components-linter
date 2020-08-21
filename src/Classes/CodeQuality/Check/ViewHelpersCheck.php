@@ -46,7 +46,9 @@ class ViewHelpersCheck extends AbstractCheck
             return $node->getUninitializedViewHelper() instanceof IntrospectionViewHelper;
         });
         return array_map(function (ViewHelperNode $node) {
-            return $node->getUninitializedViewHelper()->getViewhelperTagName();
+            /** @var IntrospectionViewHelper */
+            $introspectionViewHelper = $node->getUninitializedViewHelper();
+            return $introspectionViewHelper->getViewhelperTagName();
         }, $introspectedViewHelpers);
     }
 }

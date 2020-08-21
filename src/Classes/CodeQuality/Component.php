@@ -17,6 +17,7 @@ class Component
     public $path;
 
     public $rootNode;
+    public $fluidService;
 
     public $componentNode;
     public $paramNodes = [];

@@ -70,6 +70,7 @@ class ParamNamingCheck extends AbstractCheck
     protected function extractParamNamesAndTypes(): array
     {
         return array_reduce($this->component->paramNodes, function (array $carry, ViewHelperNode $node) {
+            /** @var \TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\TextNode */
             $arguments = $node->getArguments();
             $carry[(string) $arguments['name']] = (string) $arguments['type'];
             return $carry;
