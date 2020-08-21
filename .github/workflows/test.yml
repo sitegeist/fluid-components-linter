@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
     lint:
-        name: Source code linting
+        name: Source code linting and unit testing
         runs-on: ubuntu-latest
         steps:
             -
@@ -32,3 +32,7 @@ jobs:
             -
                 name: Editorconfig Linting
                 run: composer lint:editorconfig
+
+            -
+                name: PHP Unit Testing
+                run: composer test:php

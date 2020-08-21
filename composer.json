@@ -30,6 +30,11 @@
             "Sitegeist\\FluidComponentsLinter\\": "src/Classes/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Sitegeist\\FluidComponentsLinter\\Tests\\": "tests/"
+        }
+    },
     "bin": [
         "fclint"
     ],
@@ -42,6 +47,9 @@
         "lint:php": "phpcs --standard=PSR2 --extensions=php --exclude=Generic.Files.LineLength --ignore='vendor' .",
         "analyse:php": "phpstan analyse --no-progress --level 1 src/ tests/",
         "lint:editorconfig": "ec .",
-        "test": "phpunit tests/"
+        "test": [
+            "@test:php"
+        ],
+        "test:php": "phpunit --bootstrap vendor/autoload.php tests/Unit/"
     }
 }
