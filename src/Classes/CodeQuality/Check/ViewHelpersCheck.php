@@ -10,45 +10,30 @@ class ViewHelpersCheck extends AbstractCheck
 {
     public function check(): array
     {
-        $viewHelperPatterns = $this->generateRestrictedViewHelpersPattern();
         $usedViewHelpers = $this->extractUsedViewHelpers();
 
         $issues = [];
-        foreach ($viewHelperPatterns as $severity => $pattern) {
-            $invalidViewHelpers = array_filter($usedViewHelpers, function (string $tagName) use ($pattern) {
-                return (bool) preg_match($pattern, $tagName);
-            });
-
-            if (!empty($invalidViewHelpers)) {
-                $issues[] = $this->issue(
-                    'The following ViewHelpers are used in the renderer, but are not permitted: %s',
-                    ['<' . implode('>, <', $invalidViewHelpers) . '>']
-                )->setSeverity($severity);
+        foreach ($this->configuration['renderer']['viewHelperRestrictions'] as $restriction) {
+            $pattern = $this->createViewHelperPattern($restriction['viewHelperName']);
+            foreach ($usedViewHelpers as $tagName) {
+                if (preg_match($pattern, $tagName)) {
+                    $issues[] = $this->issue($restriction['message'], [
+                        $tagName
+                    ])->setSeverity($restriction['severity']);
+                }
             }
         }
 
         return $issues;
     }
 
-    protected function generateRestrictedViewHelpersPattern(): array
+    protected function createViewHelperPattern(string $viewHelperName): string
     {
-        $severities = [];
-        foreach ($this->configuration['renderer']['viewHelperRestrictions'] as $restriction) {
-            $pattern = preg_quote($restriction['viewHelperName'], '#');
-            // Match group of ViewHelpers?
-            if (substr($restriction['viewHelperName'], -1, 1) !== '.') {
-                $pattern .= '$';
-            }
-
-            if (!isset($severities[$restriction['severity']])) {
-                $severities[$restriction['severity']] = [];
-            }
-            $severities[$restriction['severity']][] = $pattern;
+        $pattern = preg_quote($viewHelperName, '#');
+        if (substr($viewHelperName, -1, 1) !== '.') {
+            $pattern .= '$';
         }
-
-        return array_map(function ($patterns) {
-            return '#^(' . implode('|', $patterns) . ')#';
-        }, $severities);
+        return '#^' . $pattern . '#';
     }
 
     protected function extractUsedViewHelpers(): array

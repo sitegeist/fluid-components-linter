@@ -147,137 +147,137 @@
         "viewHelperRestrictions": {
             "f:base": {
                 "viewHelperName": "f:base",
-                "message": "The base tag must not be used within components",
+                "message": "The base tag (<%s>) must not be used within components",
                 "severity": "major"
             },
             "f:be.*": {
                 "viewHelperName": "f:be.",
-                "message": "The backend ViewHelpers should not be used within components",
+                "message": "The backend ViewHelpers (<%s>) should not be used within components",
                 "severity": "minor"
             },
             "f:cache.*": {
                 "viewHelperName": "f:cache.",
-                "message": "The caching ViewHelpers should not be used within components",
+                "message": "The caching ViewHelpers (<%s>) should not be used within components",
                 "severity": "minor"
             },
             "f:cObject": {
                 "viewHelperName": "f:cObject",
-                "message": "TypoScript content must be passed as a component parameter",
+                "message": "TypoScript content must be passed as a component parameter instead of using a ViewHelper: <%s>",
                 "severity": "major"
             },
             "f:debug": {
                 "viewHelperName": "f:debug",
-                "message": "f:debug may be used in components, but should not be used in production",
+                "message": "<%s> may be used in components, but should not be used in production",
                 "severity": "info"
             },
             "f:flashMessages": {
                 "viewHelperName": "f:flashMessages",
-                "message": "Flash messages must be passed as a component parameter",
+                "message": "Flash messages must be passed as a component parameter instead of using a ViewHelper: <%s>",
                 "severity": "major"
             },
             "f:form": {
                 "viewHelperName": "f:form",
-                "message": "Form ViewHelpers may be used deliberately within components",
+                "message": "Form ViewHelpers (<%s>) may be used deliberately within components",
                 "severity": "info"
             },
             "f:form.*": {
                 "viewHelperName": "f:form.",
-                "message": "Form ViewHelpers may be used deliberately within components",
+                "message": "Form ViewHelpers (<%s>) may be used deliberately within components",
                 "severity": "info"
             },
             "f:format.html": {
                 "viewHelperName": "f:format.html",
-                "message": "f:format.html must be used outside of the component, f:format.raw may be used within component to render HTML previously passed through f:format.html",
+                "message": "<%s> must be used outside of the component, <f:format.raw> may be used within component to render HTML previously passed through <%s>",
                 "severity": "major"
             },
             "f:image": {
                 "viewHelperName": "f:image",
-                "message": "f:image should be used deliberately within components (e. g. only in Atom.Image)",
+                "message": "<%s> should be used deliberately within components (e. g. only in Atom.Image)",
                 "severity": "minor"
             },
             "f:inline": {
                 "viewHelperName": "f:inline",
-                "message": "Inline fluid code may be used deliberately within components",
+                "message": "Inline fluid code (<%s>) may be used deliberately within components",
                 "severity": "info"
             },
             "f:layout": {
                 "viewHelperName": "f:layout",
-                "message": "Layouts are currently not supported within components and thus must not be used",
+                "message": "Layouts (<%s>) are currently not supported within components and thus must not be used",
                 "severity": "major"
             },
             "f:link.*": {
                 "viewHelperName": "f:link.",
-                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter instead of using a ViewHelper: <%s>",
                 "severity": "major"
             },
             "f:media": {
                 "viewHelperName": "f:media",
-                "message": "f:media should be used deliberately within components (e. g. only in Atom.Media)",
+                "message": "<%s> should be used deliberately within components (e. g. only in Atom.Media)",
                 "severity": "minor"
             },
             "f:render": {
                 "viewHelperName": "f:render",
-                "message": "Rendering sections or partials is currently not supported within components and thus must not be used",
+                "message": "Rendering sections or partials (<%s>) is currently not supported within components and thus must not be used",
                 "severity": "major"
             },
             "f:renderChildren": {
                 "viewHelperName": "f:renderChildren",
-                "message": "Widgets should be part of integration",
+                "message": "Widgets should be part of integration: <%s>",
                 "severity": "minor"
             },
             "f:section": {
                 "viewHelperName": "f:section",
-                "message": "Sections are currently not supported within components and thus must not be used",
+                "message": "Sections (<%s>) are currently not supported within components and thus must not be used",
                 "severity": "major"
             },
             "f:security.*": {
                 "viewHelperName": "f:security.",
-                "message": "Frontend user logic must happen outside of components and then passed as a parameter",
+                "message": "Frontend user logic must happen outside of components and then passed as a parameter instead of using a ViewHelper: <%s>",
                 "severity": "major"
             },
             "f:translate": {
                 "viewHelperName": "f:translate",
-                "message": "Translate may be used within components, try to pass translations via component parameters instead",
+                "message": "<%s> may be used within components, try to pass translations via component parameters instead",
                 "severity": "info"
             },
             "f:uri.action": {
                 "viewHelperName": "f:uri.action",
-                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter instead of using a ViewHelper: <%s>",
                 "severity": "major"
             },
             "f:uri.email": {
                 "viewHelperName": "f:uri.email",
-                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter instead of using a ViewHelper: <%s>",
                 "severity": "major"
             },
             "f:uri.external": {
                 "viewHelperName": "f:uri.external",
-                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter instead of using a ViewHelper: <%s>",
                 "severity": "major"
             },
             "f:uri.page": {
                 "viewHelperName": "f:uri.page",
-                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter instead of using a ViewHelper: <%s>",
                 "severity": "major"
             },
             "f:uri.resource": {
                 "viewHelperName": "f:uri.resource",
-                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter instead of using a ViewHelper: <%s>",
                 "severity": "major"
             },
             "f:uri.typolink": {
                 "viewHelperName": "f:uri.typolink",
-                "message": "URIs must be generated outside of components and then passed as TypoLink parameter",
+                "message": "URIs must be generated outside of components and then passed as TypoLink parameter instead of using a ViewHelper: <%s>",
                 "severity": "major"
             },
             "f:uri.image": {
                 "viewHelperName": "f:uri.image",
-                "message": "f:uri.image should be used deliberately within components (e. g. only in Atom.Image)",
+                "message": "<%s> should be used deliberately within components (e. g. only in Atom.Image)",
                 "severity": "minor"
             },
             "f:widget.*": {
                 "viewHelperName": "f:widget.",
-                "message": "Widgets should be part of integration",
+                "message": "Widgets should be part of integration: <%s>",
                 "severity": "minor"
             }
         }
