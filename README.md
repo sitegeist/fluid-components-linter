@@ -14,6 +14,8 @@ code quality.
 * enforce parameter descriptions
 * enforce presence of markdown documentation and fixture files used by Fluid Styleguide
 * normalize syntax of namespaces in parameter type
+* encourage strict data types instead of generic `array` or `object`
+* suggest usage of correct types if parameter names contain hints like `link` or `image`
 * enforce that component prefixer and `class` param are used
 * enforce that certain ViewHelpers can't be used inside components
 * enforce that `content` param is always wrapped in `<f:format.raw>`
@@ -62,5 +64,3 @@ you would use the following configuration file:
     }
 }
 ```
-
-Note that currently not all rules defined in [default.fclint.json](./src/Configuration/default.fclint.json) are implemented yet.
