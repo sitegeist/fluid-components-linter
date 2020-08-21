@@ -10,7 +10,7 @@ use TYPO3Fluid\Fluid\View\TemplateView;
 
 abstract class AbstractTest extends TestCase
 {
-    public function createComponent(string $componentSource): Component
+    public function createComponent(string $componentSource, bool $strictSyntax = false): Component
     {
         $view = new TemplateView();
         $viewHelperResolver = new ViewHelperResolver();
@@ -25,6 +25,6 @@ abstract class AbstractTest extends TestCase
         );
 
         $componentPath = __DIR__ . '/TestComponent/TestComponent.html';
-        return new Component($componentPath, $parsedTemplate->getRootNode());
+        return new Component($componentPath, $parsedTemplate->getRootNode(), $strictSyntax);
     }
 }
