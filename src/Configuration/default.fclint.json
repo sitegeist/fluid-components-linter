@@ -192,7 +192,7 @@
             },
             "f:format.html": {
                 "viewHelperName": "f:format.html",
-                "message": "<%s> must be used outside of the component, <f:format.raw> may be used within component to render HTML previously passed through <%s>",
+                "message": "<%1$s> must be used outside of the component, <f:format.raw> may be used within component to render HTML previously passed through <%1$s>",
                 "severity": "major"
             },
             "f:image": {
