@@ -64,9 +64,9 @@ Your adjusted configuration will be merged with the selected configuration prese
 only need to specify the rules you want to change. To make the following changes to
 the default rules:
 
+* ignore all components inside a folder called `Template/`
 * don't require a markdown documentation file if a fixture file is present
 * limit length of parameter names to 30 characters (default is 40)
-* ignore all components inside a folder called `Template/`
 
 you would use the following configuration file:
 
