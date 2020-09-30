@@ -50,7 +50,7 @@
             "min": 3,
             "max": 40,
             "allowed": ["id"],
-            "denied": ["data", "row", "rows", "result", "results", "resultset"],
+            "denied": ["data", "row", "result", "results", "resultset"],
             "severity": "major"
         },
         "requireDescription": {
