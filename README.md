@@ -3,8 +3,6 @@
 CLI tool to validate your Fluid Components based on a specific ruleset for
 code quality.
 
-**Note: this tool is currently still under heavy development!**
-
 ## Features
 
 * check basic Fluid syntax
@@ -41,17 +39,28 @@ predefined rules in [default.fclint.json](./src/Configuration/default.fclint.jso
 
     fclint lint -c ./myRules.fclint.json Resources/Private/Components/
 
-Both configuration files are merged by `fclint`, so you only need to specify the rules you want to change. To make the following changes to the default rules:
+For convenience, a file named `.fclint.json` in the current working directory will be picked
+up automatically and doesn't need to be specified with `-c`.
+
+Your adjusted configuration will be merged with the selected configuration preset, so you
+only need to specify the rules you want to change. To make the following changes to
+the default rules:
 
 * don't require a markdown documentation file if a fixture file is present
 * limit length of parameter names to 30 characters (default is 40)
+* ignore all components inside a folder called `Template/`
 
 you would use the following configuration file:
 
-*myRules.fclint.json:*
+*.fclint.json:*
 
 ```json
 {
+    "files": {
+        "ignorePatterns": [
+            "**/Template/**"
+        ]
+    },
     "component": {
         "requireDocumentationWithFixtureFile": {
             "check": false
@@ -64,3 +73,25 @@ you would use the following configuration file:
     }
 }
 ```
+
+## Available Command Line Options
+
+There are a few options that can be specified:
+
+    $ fclint lint --help
+    Description:
+    Validates fluid components based on a specified ruleset
+
+    Usage:
+    lint [options] [--] <paths>...
+
+    Arguments:
+    paths                        Component files that should be included
+
+    Options:
+    -e, --extension[=EXTENSION]  Component file extension [default: ".html"]
+    -p, --preset[=PRESET]        Name of configuration preset [default: false]
+    -c, --config[=CONFIG]        Path to custom configuration file (.fclint.json in the current working directory will be picked up automatically) [default: false]
+        --severity[=SEVERITY]    Minimum severity, all issues below this severity will be skipped. Possible values: info, minor, major, critical, blocker [default: "info"]
+    -i, --ignore[=IGNORE]        Glob pattern that defines which files should be skipped (multiple values allowed)
+        --json                   Output results as json (compatible to codeclimate spec)

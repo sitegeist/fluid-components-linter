@@ -60,21 +60,21 @@ class LintCommand extends Command
                 'config',
                 'c',
                 InputOption::VALUE_OPTIONAL,
-                'Path to custom configuration file',
+                'Path to custom configuration file (.fclint.json in the current working directory will be picked up automatically)',
                 false
             )
             ->addOption(
                 'severity',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'Minimum severity, all issues below this severity will be skipped',
+                'Minimum severity, all issues below this severity will be skipped. Possible values: info, minor, major, critical, blocker',
                 IssueInterface::SEVERITY_INFO
             )
             ->addOption(
                 'ignore',
                 'i',
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
-                'Glob patterns that define which files should be skipped',
+                'Glob pattern that defines which files should be skipped',
                 []
             )
             ->addOption(
