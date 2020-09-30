@@ -14,7 +14,9 @@ class ConfigurationService
         $configurationParts = [
             $this->getPresetConfiguration('default'),
             ($configurationPreset !== false) ? $this->getPresetConfiguration($configurationPreset) : [],
-            ($configurationFile !== false) ? $this->getCustomConfiguration($configurationFile) : []
+            ($configurationFile !== false)
+                ? $this->getCustomConfiguration($configurationFile)
+                : $this->getCustomConfiguration('.fclint.json', true)
         ];
 
         $processor = new Processor();
@@ -46,13 +48,17 @@ class ConfigurationService
         return $configuration;
     }
 
-    public function getCustomConfiguration(string $path): ?array
+    public function getCustomConfiguration(string $path, bool $optional = false): ?array
     {
         if ($path === '') {
             return null;
         }
 
         if (!file_exists($path)) {
+            if ($optional) {
+                return null;
+            }
+
             throw new \Exception(sprintf(
                 'The specified configuration file does not exist: %s',
                 $path
