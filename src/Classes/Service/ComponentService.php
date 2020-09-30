@@ -122,16 +122,16 @@ class ComponentService
             $prefix = '';
             if ($mask === '') {
                 continue;
-
             } elseif ($mask === '*') {
                 return null;
-
             } elseif ($mask[0] === '/') { // absolute fixing
                 $mask = ltrim($mask, '/');
                 $prefix = '(?<=^/)';
             }
-            $pattern[] = $prefix . strtr(preg_quote($mask, '#'),
-                ['\*\*' => '.*', '\*' => '[^/]*', '\?' => '[^/]', '\[\!' => '[^', '\[' => '[', '\]' => ']', '\-' => '-']);
+            $pattern[] = $prefix . strtr(
+                preg_quote($mask, '#'),
+                ['\*\*' => '.*', '\*' => '[^/]*', '\?' => '[^/]', '\[\!' => '[^', '\[' => '[', '\]' => ']', '\-' => '-']
+            );
         }
         return $pattern ? '#/(' . implode('|', $pattern) . ')$#Di' : null;
     }
