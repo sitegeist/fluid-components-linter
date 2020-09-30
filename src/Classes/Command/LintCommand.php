@@ -40,7 +40,7 @@ class LintCommand extends Command
             ->addArgument(
                 'paths',
                 InputArgument::IS_ARRAY | InputArgument::REQUIRED,
-                'Component namespaces that should be included'
+                'Component files that should be included'
             )
             ->addOption(
                 'extension',
