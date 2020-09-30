@@ -1,7 +1,7 @@
 # Fluid Components Linter
 
-CLI tool to validate your Fluid Components based on a specific ruleset for
-code quality.
+CLI tool to validate your [Fluid Components](https://github.com/sitegeist/fluid-components)
+based on a specific ruleset for code quality.
 
 ## Features
 
@@ -18,8 +18,6 @@ code quality.
 * enforce that certain ViewHelpers can't be used inside components
 * enforce that `content` param is always wrapped in `<f:format.raw>`
 
-see [CodeQualityChecks.php](./src/Configuration/CodeQualityChecks.php)
-
 ## Getting Started
 
 To use the linter, require this package as a dev dependency via composer:
@@ -31,6 +29,26 @@ individual component files as well as whole directory structures containing
 component files.
 
     fclint lint Resources/Private/Components/
+
+For ease of use you might want to define a custom composer command in your project:
+
+*composer.json:*
+
+```json
+{
+    ...
+
+    "scripts": {
+        "lint:components": "fclint lint Resources/Private/Components/"
+    }
+}
+```
+
+and then just call:
+
+    composer lint:components
+
+(on-demand, in git hooks, in your CI...)
 
 ## Customize Ruleset
 
@@ -74,24 +92,30 @@ you would use the following configuration file:
 }
 ```
 
-## Available Command Line Options
+## Command Line Options
 
-There are a few options that can be specified:
+There are a few command line options that can be specified:
 
-    $ fclint lint --help
-    Description:
-    Validates fluid components based on a specified ruleset
+```
+$ fclint lint --help
+Description:
+Validates fluid components based on a specified ruleset
 
-    Usage:
-    lint [options] [--] <paths>...
+Usage:
+lint [options] [--] <paths>...
 
-    Arguments:
-    paths                        Component files that should be included
+Arguments:
+paths                        Component files that should be included
 
-    Options:
-    -e, --extension[=EXTENSION]  Component file extension [default: ".html"]
-    -p, --preset[=PRESET]        Name of configuration preset [default: false]
-    -c, --config[=CONFIG]        Path to custom configuration file (.fclint.json in the current working directory will be picked up automatically) [default: false]
-        --severity[=SEVERITY]    Minimum severity, all issues below this severity will be skipped. Possible values: info, minor, major, critical, blocker [default: "info"]
-    -i, --ignore[=IGNORE]        Glob pattern that defines which files should be skipped (multiple values allowed)
-        --json                   Output results as json (compatible to codeclimate spec)
+Options:
+-e, --extension[=EXTENSION]  Component file extension [default: ".html"]
+-p, --preset[=PRESET]        Name of configuration preset [default: false]
+-c, --config[=CONFIG]        Path to custom configuration file (.fclint.json in the current working directory will be picked up automatically) [default: false]
+    --severity[=SEVERITY]    Minimum severity, all issues below this severity will be skipped. Possible values: info, minor, major, critical, blocker [default: "info"]
+-i, --ignore[=IGNORE]        Glob pattern that defines which files should be skipped (multiple values allowed)
+    --json                   Output results as json (compatible to codeclimate spec)
+```
+
+## Support & Discussion
+
+If you have any questions, need support or want to discuss components in TYPO3, feel free to join [#ext-fluid_components](https://typo3.slack.com/archives/ext-fluid_components).
