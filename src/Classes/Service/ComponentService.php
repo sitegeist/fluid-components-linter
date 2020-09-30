@@ -49,6 +49,10 @@ class ComponentService
      */
     public function removeComponentsFromIgnoreList(array $components, array $ignoreList): array
     {
+        if (empty($ignoreList)) {
+            return $components;
+        }
+
         $ignorePattern = $this->buildPattern($ignoreList);
         if (!$ignorePattern) {
             throw new \Exception(sprintf(

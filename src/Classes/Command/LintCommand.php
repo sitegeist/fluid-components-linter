@@ -101,12 +101,14 @@ class LintCommand extends Command
                 $input->getOption('extension')
             );
 
-            if ($input->getOption('ignore')) {
-                $components = $componentService->removeComponentsFromIgnoreList(
-                    $components,
-                    $input->getOption('ignore')
-                );
-            }
+            $ignorePatterns = array_merge(
+                $configuration['files']['ignorePatterns'],
+                $input->getOption('ignore')
+            );
+            $components = $componentService->removeComponentsFromIgnoreList(
+                $components,
+                $ignorePatterns
+            );
 
             $codeQualityService = new CodeQualityService($configuration, $registeredChecks);
             $issues = [];

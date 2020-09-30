@@ -11,6 +11,9 @@
         "noNumberSuffix": "[^0-9]+$",
         "snakeCase": "^([a-z0-9]+_)*[a-z0-9]*$"
     },
+    "files": {
+        "ignorePatterns": []
+    },
     "component": {
         "requireFixtureFile": {
             "check": false,
