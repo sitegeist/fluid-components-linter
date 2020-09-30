@@ -40,6 +40,29 @@ class ComponentService
     }
 
     /**
+     * Removes all items from the provided array of component paths
+     * that match the provided ignore list
+     *
+     * @param array $components
+     * @param array $ignoreList
+     * @return array
+     */
+    public function removeComponentsFromIgnoreList(array $components, array $ignoreList): array
+    {
+        $ignorePattern = $this->buildPattern($ignoreList);
+        if (!$ignorePattern) {
+            throw new \Exception(sprintf(
+                'Invalid ignore pattern provided: %s',
+                print_r($input->getOption('ignore'), true)
+            ), 1601484307);
+        }
+
+        return array_filter($components, function ($path) use ($ignorePattern) {
+            return !preg_match($ignorePattern, $path);
+        });
+    }
+
+    /**
      * Searches recursively for component files in a directory
      *
      * @param string $path
@@ -79,5 +102,33 @@ class ComponentService
         }
 
         return $components;
+    }
+
+    /**
+     * Converts glob pattern to regular expression.
+     *
+     * This function is borrowed/based on composer package nette/finder
+     * https://github.com/nette/finder/
+     */
+    protected static function buildPattern(array $masks): ?string
+    {
+        $pattern = [];
+        foreach ($masks as $mask) {
+            $mask = rtrim(strtr($mask, '\\', '/'), '/');
+            $prefix = '';
+            if ($mask === '') {
+                continue;
+
+            } elseif ($mask === '*') {
+                return null;
+
+            } elseif ($mask[0] === '/') { // absolute fixing
+                $mask = ltrim($mask, '/');
+                $prefix = '(?<=^/)';
+            }
+            $pattern[] = $prefix . strtr(preg_quote($mask, '#'),
+                ['\*\*' => '.*', '\*' => '[^/]*', '\?' => '[^/]', '\[\!' => '[^', '\[' => '[', '\]' => ']', '\-' => '-']);
+        }
+        return $pattern ? '#/(' . implode('|', $pattern) . ')$#Di' : null;
     }
 }

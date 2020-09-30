@@ -71,6 +71,13 @@ class LintCommand extends Command
                 IssueInterface::SEVERITY_INFO
             )
             ->addOption(
+                'ignore',
+                'i',
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+                'Glob patterns that define which files should be skipped',
+                []
+            )
+            ->addOption(
                 'json',
                 null,
                 InputOption::VALUE_NONE,
@@ -93,6 +100,13 @@ class LintCommand extends Command
                 $input->getArgument('paths'),
                 $input->getOption('extension')
             );
+
+            if ($input->getOption('ignore')) {
+                $components = $componentService->removeComponentsFromIgnoreList(
+                    $components,
+                    $input->getOption('ignore')
+                );
+            }
 
             $codeQualityService = new CodeQualityService($configuration, $registeredChecks);
             $issues = [];
