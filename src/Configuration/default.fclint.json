@@ -268,11 +268,6 @@
                 "message": "URIs must be generated outside of components and then passed as TypoLink parameter instead of using a ViewHelper: <%s>",
                 "severity": "major"
             },
-            "f:uri.resource": {
-                "viewHelperName": "f:uri.resource",
-                "message": "URIs must be generated outside of components and then passed as TypoLink parameter instead of using a ViewHelper: <%s>",
-                "severity": "major"
-            },
             "f:uri.typolink": {
                 "viewHelperName": "f:uri.typolink",
                 "message": "URIs must be generated outside of components and then passed as TypoLink parameter instead of using a ViewHelper: <%s>",
