@@ -57,7 +57,7 @@ class ComponentService
         if (!$ignorePattern) {
             throw new \Exception(sprintf(
                 'Invalid ignore pattern provided: %s',
-                print_r($input->getOption('ignore'), true)
+                print_r($ignoreList, true)
             ), 1601484307);
         }
 
