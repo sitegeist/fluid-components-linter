@@ -6,9 +6,10 @@ namespace Sitegeist\FluidComponentsLinter\CodeQuality;
 use Sitegeist\FluidComponentsLinter\Exception\ComponentStructureException;
 use Sitegeist\FluidComponentsLinter\Exception\StrictComponentStructureException;
 use Sitegeist\FluidComponentsLinter\Service\FluidService;
-use Sitegeist\FluidComponentsLinter\ViewHelpers\ComponentViewHelper;
-use Sitegeist\FluidComponentsLinter\ViewHelpers\ParamViewHelper;
-use Sitegeist\FluidComponentsLinter\ViewHelpers\RendererViewHelper;
+use Sitegeist\FluidComponentsLinter\ViewHelpers\Fluid\CommentViewHelper;
+use Sitegeist\FluidComponentsLinter\ViewHelpers\FluidComponents\ComponentViewHelper;
+use Sitegeist\FluidComponentsLinter\ViewHelpers\FluidComponents\ParamViewHelper;
+use Sitegeist\FluidComponentsLinter\ViewHelpers\FluidComponents\RendererViewHelper;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\RootNode;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 
@@ -44,6 +45,10 @@ class Component
                         $this->fluidService->generateNodeExceptionPreview($componentCandidate)
                     ), 1595789404);
                 }
+                continue;
+            }
+
+            if ($componentCandidate->getViewHelperClassName() === CommentViewHelper::class) {
                 continue;
             }
 
@@ -100,6 +105,9 @@ class Component
                     }
                     $this->rendererNode = $paramRendererCandidate;
                     break;
+
+                case CommentViewHelper::class:
+                    continue 2;
 
                 default:
                     if ($useStrictSyntax) {

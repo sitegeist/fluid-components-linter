@@ -47,7 +47,8 @@ class CodeQualityService
         $this->view = new TemplateView();
         $viewHelperResolver = new ViewHelperResolver();
         $viewHelperResolver->setNamespaces([
-            'fc' => ['Sitegeist\\FluidComponentsLinter\\ViewHelpers']
+            'f' => ['Sitegeist\\FluidComponentsLinter\\ViewHelpers\\Fluid'],
+            'fc' => ['Sitegeist\\FluidComponentsLinter\\ViewHelpers\\FluidComponents']
         ]);
         $this->view->getRenderingContext()->setViewHelperResolver($viewHelperResolver);
     }
