@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Sitegeist\FluidComponentsLinter\Service;
 
+use Sitegeist\FluidComponentsLinter\ViewHelpers\Fluid\CommentViewHelper;
 use Sitegeist\FluidComponentsLinter\ViewHelpers\IntrospectionViewHelper;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\EscapingNode;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\NodeInterface;
@@ -30,6 +31,25 @@ class FluidService
         }
 
         return $nodes;
+    }
+
+    public function extractComments(NodeInterface $node): array
+    {
+        $comments = [];
+        foreach ($node->getChildNodes() as $commentCandidate) {
+            $commentCandidate = $this->resolveEscapingNode($commentCandidate);
+            if (!$commentCandidate instanceof ViewHelperNode) {
+                continue;
+            }
+
+            if ($commentCandidate->getViewHelperClassName() === CommentViewHelper::class) {
+                $comments[] = implode('', $this->extractNodeType($commentCandidate, TextNode::class));
+            }
+
+            $comments = array_merge($comments, $this->extractComments($commentCandidate));
+        }
+
+        return $comments;
     }
 
     public function generateNodeExceptionPreview(NodeInterface $node): string

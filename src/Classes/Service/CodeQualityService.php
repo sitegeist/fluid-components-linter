@@ -72,7 +72,8 @@ class CodeQualityService
             $component = new Component(
                 $path,
                 $parsedTemplate->getRootNode(),
-                $this->configuration['component']['requireStrictComponentStructure']['check']
+                $this->configuration['component']['requireStrictComponentStructure']['check'],
+                $this->configuration
             );
         } catch (ComponentStructureException $e) {
             $issue = $this->blocker($e->getMessage(), $path);
@@ -81,7 +82,7 @@ class CodeQualityService
 
         $issues = [];
         foreach ($this->checks as $checkClassName) {
-            $checkObject = new $checkClassName($component, $this->configuration);
+            $checkObject = new $checkClassName($component);
             $issues = array_merge(
                 $issues,
                 $checkObject->check()

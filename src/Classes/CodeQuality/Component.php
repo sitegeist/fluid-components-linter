@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Sitegeist\FluidComponentsLinter\CodeQuality;
 
+use Sitegeist\FluidComponentsLinter\Configuration\LintConfiguration;
 use Sitegeist\FluidComponentsLinter\Exception\ComponentStructureException;
 use Sitegeist\FluidComponentsLinter\Exception\StrictComponentStructureException;
 use Sitegeist\FluidComponentsLinter\Service\FluidService;
@@ -10,6 +11,8 @@ use Sitegeist\FluidComponentsLinter\ViewHelpers\Fluid\CommentViewHelper;
 use Sitegeist\FluidComponentsLinter\ViewHelpers\FluidComponents\ComponentViewHelper;
 use Sitegeist\FluidComponentsLinter\ViewHelpers\FluidComponents\ParamViewHelper;
 use Sitegeist\FluidComponentsLinter\ViewHelpers\FluidComponents\RendererViewHelper;
+use Symfony\Component\Config\Definition\Processor;
+use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\NodeInterface;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\RootNode;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 
@@ -24,7 +27,10 @@ class Component
     public $paramNodes = [];
     public $rendererNode;
 
-    public function __construct(string $path, RootNode $node, bool $useStrictSyntax = false)
+    public $configuration;
+    public $customConfiguration;
+
+    public function __construct(string $path, RootNode $node, bool $useStrictSyntax = false, array $configuration = [])
     {
         $this->path = realpath($path);
         $this->rootNode = $node;
@@ -32,6 +38,16 @@ class Component
 
         $this->extractComponentNode($useStrictSyntax);
         $this->extractParamsAndRendererNode($useStrictSyntax);
+        $this->extractCustomConfiguration();
+
+        $processor = new Processor();
+        $this->configuration = $processor->processConfiguration(
+            new LintConfiguration,
+            [
+                $configuration,
+                $this->customConfiguration
+            ]
+        );
     }
 
     protected function extractComponentNode(bool $useStrictSyntax): void
@@ -126,5 +142,33 @@ class Component
                 1595868607
             );
         }
+    }
+
+    protected function extractCustomConfiguration()
+    {
+        $comments = $this->fluidService->extractComments($this->rootNode);
+        $ignores = array_reduce($comments, function ($result, $comment) {
+            if (preg_match('#fclint:ignore +([A-Za-z0-9\.,]+)#', $comment, $matches)) {
+                $result = array_merge($result, explode(',', $matches[1]));
+            }
+            return $result;
+        }, []);
+
+        $this->customConfiguration = [];
+        foreach ($ignores as $command) {
+            $this->setConfigByPath($command . '.check', false);
+        }
+    }
+
+    protected function setConfigByPath(string $path, $value)
+    {
+        $currentPosition =& $this->customConfiguration;
+        foreach (explode('.', $path) as $key) {
+            if (!isset($currentPosition[$key]) || !is_array($currentPosition[$key])) {
+                $currentPosition[$key] = [];
+            }
+            $currentPosition =& $currentPosition[$key];
+        }
+        $currentPosition = $value;
     }
 }

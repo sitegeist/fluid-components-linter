@@ -16,10 +16,10 @@ abstract class AbstractCheck implements CheckInterface
 
     protected $defaultSeverity = IssueInterface::SEVERITY_MAJOR;
 
-    public function __construct(Component $component, array $configuration)
+    public function __construct(Component $component, array $configuration = null)
     {
         $this->component = $component;
-        $this->configuration = $configuration;
+        $this->configuration = $configuration ?? $component->configuration;
 
         $this->fluidService = new FluidService;
     }
