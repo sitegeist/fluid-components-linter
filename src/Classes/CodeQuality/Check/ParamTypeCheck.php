@@ -16,7 +16,7 @@ class ParamTypeCheck extends AbstractCheck
 
             foreach ($this->configuration['params']['typeHints'] as $config) {
                 $pattern = $this->createPattern($config['namePattern']);
-                if (preg_match($pattern, $name)) {
+                if (preg_match($pattern, $name) && $type !== $config['typeHint']) {
                     $issues[] = $this->issue($issuePrefix . $config['message'], [
                         $config['typeHint']
                     ])->setSeverity($config['severity']);
