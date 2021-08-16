@@ -14,7 +14,7 @@ class ConfigurationService
         $configurationParts = [
             $this->getPresetConfiguration('default'),
             ($configurationPreset !== false) ? $this->getPresetConfiguration($configurationPreset) : [],
-            ($configurationFile !== false)
+            (is_string($configurationFile))
                 ? $this->getCustomConfiguration($configurationFile)
                 : $this->getCustomConfiguration('.fclint.json', true)
         ];
