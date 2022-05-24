@@ -25,7 +25,7 @@ jobs:
                 uses: actions/cache@v1
                 with:
                     path: ~/.composer/cache
-                    key: composer
+                    key: composer-php-7.4
 
             -
                 name: Install composer dependencies
@@ -38,6 +38,40 @@ jobs:
             -
                 name: Editorconfig Linting
                 run: composer lint:editorconfig
+
+    unittest:
+        runs-on: ubuntu-latest
+
+        strategy:
+            max-parallel: 2
+            matrix:
+                php-version: [7.4, 8.0, 8.1]
+
+        name: Unit (PHP ${{ matrix.php-version }})
+        steps:
+            -
+                name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-version }}
+
+            -
+                uses: actions/checkout@v2
+
+            -
+                name: Validate composer.json
+                run: composer validate
+
+            -
+                name: Cache composer dependencies
+                uses: actions/cache@v1
+                with:
+                    path: ~/.composer/cache
+                    key: composer-php-${{ matrix.php-version }}
+
+            -
+                name: Install composer dependencies
+                run: composer install --prefer-dist --no-progress --no-suggest
 
             -
                 name: PHP Unit Testing
