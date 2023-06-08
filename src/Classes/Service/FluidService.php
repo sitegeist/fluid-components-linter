@@ -17,7 +17,16 @@ class FluidService
         $node = $this->resolveEscapingNode($node);
         $nodes = [];
 
-        foreach ($node->getChildNodes() as $childNode) {
+        $checkNodes = $node->getChildNodes();
+        if ($node instanceof ViewHelperNode) {
+            foreach ($node->getArguments() as $argument) {
+                if ($argument instanceof NodeInterface) {
+                    $checkNodes[] = $argument;
+                }
+            }
+        }
+
+        foreach ($checkNodes as $childNode) {
             $childNode = $this->resolveEscapingNode($childNode);
 
             if ($childNode instanceof $nodeType) {
