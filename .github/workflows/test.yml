@@ -11,7 +11,7 @@ jobs:
                 name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 7.4
+                    php-version: 8.2
 
             -
                 uses: actions/checkout@v2
@@ -25,7 +25,7 @@ jobs:
                 uses: actions/cache@v1
                 with:
                     path: ~/.composer/cache
-                    key: composer-php-7.4
+                    key: composer-php-8.2
 
             -
                 name: Install composer dependencies
@@ -45,7 +45,7 @@ jobs:
         strategy:
             max-parallel: 2
             matrix:
-                php-version: [7.4, 8.0, 8.1]
+                php-version: [8.0, 8.1, 8.2]
 
         name: Unit (PHP ${{ matrix.php-version }})
         steps:
