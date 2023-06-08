@@ -11,10 +11,6 @@ class ViewHelperResolver extends \TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperRes
 {
     public function createViewHelperInstanceFromClassName($viewHelperClassName)
     {
-        if (class_exists($viewHelperClassName)) {
-            return parent::createViewHelperInstanceFromClassName($viewHelperClassName);
-        }
-
         $parts = explode('\\', $viewHelperClassName);
         $methodIdentifier = array_pop($parts);
         $namespaceIdentifier = array_pop($parts);
