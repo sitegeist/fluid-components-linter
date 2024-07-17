@@ -8,7 +8,7 @@ use Sitegeist\FluidComponentsLinter\CodeQuality\Component;
 use Sitegeist\FluidComponentsLinter\Fluid\ViewHelper\ViewHelperResolver;
 use TYPO3Fluid\Fluid\View\TemplateView;
 
-abstract class AbstractTest extends TestCase
+abstract class AbstractTestClass extends TestCase
 {
     public function createComponent(string $componentSource, bool $strictSyntax = false): Component
     {

@@ -3,22 +3,24 @@ declare(strict_types=1);
 
 namespace Sitegeist\FluidComponentsLinter\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Check\ParamCountCheck;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Issue\IssueInterface;
 
-final class ParamCountCheckTest extends AbstractTest
+final class ParamCountCheckTest extends AbstractTestClass
 {
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             'tooFewParameters' => [
-                $this->generateConfiguration(3, 10, IssueInterface::SEVERITY_MAJOR),
+                static::generateConfiguration(3, 10, IssueInterface::SEVERITY_MAJOR),
                 '<fc:component><fc:renderer></fc:renderer></fc:component>',
                 1,
                 IssueInterface::SEVERITY_MAJOR
             ],
             'parametersInAllowedRange' => [
-                $this->generateConfiguration(3, 5, IssueInterface::SEVERITY_MAJOR),
+                static::generateConfiguration(3, 5, IssueInterface::SEVERITY_MAJOR),
                 '<fc:component>
                     <fc:param name="a" type="string" />
                     <fc:param name="b" type="string" />
@@ -29,7 +31,7 @@ final class ParamCountCheckTest extends AbstractTest
                 IssueInterface::SEVERITY_MAJOR
             ],
             'tooManyParameters' => [
-                $this->generateConfiguration(1, 5, IssueInterface::SEVERITY_MAJOR),
+                static::generateConfiguration(1, 5, IssueInterface::SEVERITY_MAJOR),
                 '<fc:component>
                     <fc:param name="a" type="string" />
                     <fc:param name="b" type="string" />
@@ -43,7 +45,7 @@ final class ParamCountCheckTest extends AbstractTest
                 IssueInterface::SEVERITY_MAJOR
             ],
             'minorSeverity' => [
-                $this->generateConfiguration(3, 10, IssueInterface::SEVERITY_MINOR),
+                static::generateConfiguration(3, 10, IssueInterface::SEVERITY_MINOR),
                 '<fc:component><fc:renderer></fc:renderer></fc:component>',
                 1,
                 IssueInterface::SEVERITY_MINOR
@@ -51,9 +53,8 @@ final class ParamCountCheckTest extends AbstractTest
         ];
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[Test]
+    #[DataProvider('dataProvider')]
     public function testChecksForMinimumMaximumParameterCount(
         array $configuration,
         string $componentSource,
@@ -69,7 +70,7 @@ final class ParamCountCheckTest extends AbstractTest
         }
     }
 
-    public function generateConfiguration(int $min, int $max, string $severity): array
+    public static function generateConfiguration(int $min, int $max, string $severity): array
     {
         return [
             'params' => [
