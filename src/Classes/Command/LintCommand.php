@@ -20,7 +20,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class LintCommand extends Command
 {
-    protected static $defaultName = 'lint';
 
     /**
      * Define severities which will lead to an exit status 0
@@ -36,6 +35,7 @@ class LintCommand extends Command
     protected function configure()
     {
         $this
+            ->setName('lint')
             ->setDescription('Validates fluid components based on a specified ruleset')
             ->addArgument(
                 'paths',
