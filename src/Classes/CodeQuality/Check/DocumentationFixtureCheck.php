@@ -35,9 +35,7 @@ class DocumentationFixtureCheck extends AbstractCheck
             return $issues;
         }
 
-        $fixtureFiles = array_map(function ($fixtureFile) use ($directory, $name) {
-            return sprintf($fixtureFile, $directory, $name);
-        }, $this->fixtureFiles);
+        $fixtureFiles = array_map(fn($fixtureFile) => sprintf($fixtureFile, $directory, $name), $this->fixtureFiles);
         $fixtureFile = array_filter($fixtureFiles, 'file_exists');
         $fixtureFile = reset($fixtureFile);
 

@@ -30,7 +30,7 @@ class IntrospectionViewHelper extends AbstractViewHelper
         return sprintf('%s:%s', $this->namespaceIdentifier, $this->methodIdentifier);
     }
 
-    public function validateAdditionalArguments(array $arguments)
+    public function validateAdditionalArguments(array $arguments): void
     {
         // Allow all arguments
     }

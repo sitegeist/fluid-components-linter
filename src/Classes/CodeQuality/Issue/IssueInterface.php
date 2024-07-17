@@ -5,16 +5,16 @@ namespace Sitegeist\FluidComponentsLinter\CodeQuality\Issue;
 
 interface IssueInterface
 {
-    const SEVERITY_INFO = 'info';
-    const SEVERITY_MINOR = 'minor';
-    const SEVERITY_MAJOR = 'major';
-    const SEVERITY_CRITICAL = 'critical';
-    const SEVERITY_BLOCKER = 'blocker';
+    public const SEVERITY_INFO = 'info';
+    public const SEVERITY_MINOR = 'minor';
+    public const SEVERITY_MAJOR = 'major';
+    public const SEVERITY_CRITICAL = 'critical';
+    public const SEVERITY_BLOCKER = 'blocker';
 
     /**
      * Ordered list of severities based on their... severity
      */
-    const SEVERITIES = [
+    public const SEVERITIES = [
         self::SEVERITY_INFO,
         self::SEVERITY_MINOR,
         self::SEVERITY_MAJOR,

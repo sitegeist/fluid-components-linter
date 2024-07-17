@@ -9,22 +9,17 @@ use Sitegeist\FluidComponentsLinter\CodeQuality\Issue\Issue;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Issue\IssueInterface;
 use Sitegeist\FluidComponentsLinter\Exception\ComponentStructureException;
 use Sitegeist\FluidComponentsLinter\Fluid\ViewHelper\ViewHelperResolver;
+use TYPO3Fluid\Fluid\Core\Parser\Exception;
 use TYPO3Fluid\Fluid\View\TemplateView;
 
 class CodeQualityService
 {
-    /** @var array */
-    protected $configuration;
+    protected ?TemplateView $view = null;
 
-    /** @var string[] */
-    protected $checks;
-
-    /** @var TemplateView */
-    protected $view;
-
-    public function __construct(array $configuration, array $checks)
-    {
-        $this->configuration = $configuration;
+    public function __construct(
+        protected array $configuration,
+        protected array $checks, // @var string[]
+    ) {
         $this->initializeChecks($checks);
         $this->initializeView();
     }
@@ -60,7 +55,7 @@ class CodeQualityService
                 file_get_contents($path),
                 $path
             );
-        } catch (\TYPO3Fluid\Fluid\Core\Parser\Exception $e) {
+        } catch (Exception $e) {
             preg_match('#in template .+, line ([0-9]+) at character ([0-9]+).#', $e->getMessage(), $matches);
             $issue = $this->blocker($e->getMessage(), $path, (int) $matches[1], (int) $matches[2]);
             return [$issue];

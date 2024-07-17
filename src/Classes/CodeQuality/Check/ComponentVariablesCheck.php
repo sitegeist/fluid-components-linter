@@ -36,8 +36,6 @@ class ComponentVariablesCheck extends AbstractCheck
             $this->component->rootNode,
             ObjectAccessorNode::class
         );
-        return array_map(function (ObjectAccessorNode $node) {
-            return $node->getObjectPath();
-        }, $usedVariables);
+        return array_map(fn(ObjectAccessorNode $node) => $node->getObjectPath(), $usedVariables);
     }
 }

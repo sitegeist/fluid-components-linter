@@ -48,14 +48,14 @@ class FluidService
             if ($uninitializedViewHelper instanceof IntrospectionViewHelper) {
                 return $uninitializedViewHelper->getViewhelperTag();
             } else {
-                return get_class($uninitializedViewHelper);
+                return $uninitializedViewHelper::class;
             }
         } elseif ($node instanceof TextNode) {
             return trim($node->getText());
         } elseif ($node instanceof ObjectAccessorNode) {
             return '{' . $node->getObjectPath() . '}';
         } else {
-            return get_class($node);
+            return $node::class;
         }
     }
 

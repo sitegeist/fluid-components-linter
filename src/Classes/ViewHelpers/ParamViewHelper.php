@@ -10,7 +10,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\ParserRuntimeOnly;
 
 class ParamViewHelper extends AbstractViewHelper
 {
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('name', 'string', 'Parameter name', true);
         $this->registerArgument('type', 'string', 'Parameter type', true);

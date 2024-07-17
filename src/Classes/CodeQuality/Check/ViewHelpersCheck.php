@@ -16,7 +16,7 @@ class ViewHelpersCheck extends AbstractCheck
         foreach ($this->configuration['renderer']['viewHelperRestrictions'] as $restriction) {
             $pattern = $this->createViewHelperPattern($restriction['viewHelperName']);
             foreach ($usedViewHelpers as $tagName) {
-                if (preg_match($pattern, $tagName)) {
+                if (preg_match($pattern, (string) $tagName)) {
                     $issues[] = $this->issue($restriction['message'], [
                         $tagName
                     ])->setSeverity($restriction['severity']);
@@ -30,7 +30,7 @@ class ViewHelpersCheck extends AbstractCheck
     protected function createViewHelperPattern(string $viewHelperName): string
     {
         $pattern = preg_quote($viewHelperName, '#');
-        if (substr($viewHelperName, -1, 1) !== '.') {
+        if (!str_ends_with($viewHelperName, '.')) {
             $pattern .= '$';
         }
         return '#^' . $pattern . '#';
@@ -42,9 +42,7 @@ class ViewHelpersCheck extends AbstractCheck
             $this->component->rootNode,
             ViewHelperNode::class
         );
-        $introspectedViewHelpers = array_filter($usedViewHelpers, function (ViewHelperNode $node) {
-            return $node->getUninitializedViewHelper() instanceof IntrospectionViewHelper;
-        });
+        $introspectedViewHelpers = array_filter($usedViewHelpers, fn(ViewHelperNode $node) => $node->getUninitializedViewHelper() instanceof IntrospectionViewHelper);
         return array_map(function (ViewHelperNode $node) {
             /** @var IntrospectionViewHelper */
             $introspectionViewHelper = $node->getUninitializedViewHelper();

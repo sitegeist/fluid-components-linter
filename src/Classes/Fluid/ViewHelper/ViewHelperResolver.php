@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Sitegeist\FluidComponentsLinter\Fluid\ViewHelper;
 
-use TYPO3Fluid\Fluid\Core\Parser\Exception as ParserException;
 use Sitegeist\FluidComponentsLinter\ViewHelpers\IntrospectionViewHelper;
+use TYPO3Fluid\Fluid\Core\Parser\Exception as ParserException;
+use TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperInterface;
 
 class ViewHelperResolver extends \TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperResolver
 {
-    public function createViewHelperInstanceFromClassName($viewHelperClassName)
+    public function createViewHelperInstanceFromClassName($viewHelperClassName): ViewHelperInterface
     {
         $parts = explode('\\', $viewHelperClassName);
         $methodIdentifier = array_pop($parts);
@@ -25,7 +26,7 @@ class ViewHelperResolver extends \TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperRes
     {
         try {
             return parent::resolveViewHelperClassName($namespaceIdentifier, $methodIdentifier);
-        } catch (ParserException $e) {
+        } catch (ParserException) {
             // Redirect missing ViewHelpers to introspection placeholder
             return sprintf(
                 '%s\\%s\\%s',

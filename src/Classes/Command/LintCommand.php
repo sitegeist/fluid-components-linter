@@ -6,12 +6,10 @@ namespace Sitegeist\FluidComponentsLinter\Command;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Issue\IssueInterface;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Output\GroupedOutput;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Output\JsonOutput;
-use Sitegeist\FluidComponentsLinter\Configuration\LintConfiguration;
-use Sitegeist\FluidComponentsLinter\Exception\ConfigurationException;
 use Sitegeist\FluidComponentsLinter\Service\CodeQualityService;
 use Sitegeist\FluidComponentsLinter\Service\ComponentService;
 use Sitegeist\FluidComponentsLinter\Service\ConfigurationService;
-use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,19 +18,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class LintCommand extends Command
 {
-
     /**
      * Define severities which will lead to an exit status 0
-     *
-     * @var array
      */
-    protected $fatalSeverities = [
+    protected array $fatalSeverities = [
         IssueInterface::SEVERITY_BLOCKER,
         IssueInterface::SEVERITY_CRITICAL,
         IssueInterface::SEVERITY_MAJOR
     ];
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('lint')
@@ -85,7 +80,7 @@ class LintCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $configurationService = new ConfigurationService;
@@ -121,9 +116,7 @@ class LintCommand extends Command
 
             $skipSeverities = $this->determineSeveritiesToSkip($input->getOption('severity'));
             if (!empty($skipSeverities)) {
-                $issues = array_filter($issues, function (IssueInterface $issue) use ($skipSeverities) {
-                    return !in_array($issue->getSeverity(), $skipSeverities);
-                });
+                $issues = array_filter($issues, fn(IssueInterface $issue) => !in_array($issue->getSeverity(), $skipSeverities));
             }
 
             if ($input->getOption('json')) {
@@ -154,7 +147,7 @@ class LintCommand extends Command
         return 0;
     }
 
-    protected function determineSeveritiesToSkip(string $minSeverity)
+    protected function determineSeveritiesToSkip(string $minSeverity): array
     {
         $skipSeverities = [];
         foreach (IssueInterface::SEVERITIES as $severity) {
