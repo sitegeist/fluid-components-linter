@@ -5,21 +5,18 @@ namespace Sitegeist\FluidComponentsLinter\CodeQuality\Issue;
 
 class Issue implements IssueInterface
 {
-    protected $checkName = '';
-    protected $description;
-    protected $data;
+    protected string $checkName = '';
 
-    protected $categories = [];
-    protected $severity = IssueInterface::SEVERITY_MAJOR;
+    protected array $categories = [];
+    protected string $severity = IssueInterface::SEVERITY_MAJOR;
 
-    protected $file = '';
-    protected $line = null;
-    protected $column = null;
-
-    public function __construct(string $description, array $data, string $file, int $line = null, int $column = null)
-    {
-        $this->description = $description;
-        $this->data = $data;
+    public function __construct(
+        protected string $description,
+        protected array $data,
+        protected string $file,
+        protected ?int $line = null,
+        protected ?int $column = null,
+    ) {
         $this->setLocation($file, $line, $column);
     }
 

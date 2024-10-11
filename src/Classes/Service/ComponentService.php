@@ -8,10 +8,8 @@ class ComponentService
     /**
      * Collection of paths that have already been scanned for components;
      * this prevents infinite loops caused by circular symlinks
-     *
-     * @var array
      */
-    protected $scannedPaths;
+    protected array $scannedPaths = [];
 
     /**
      * Finds all components in the specified paths
@@ -22,10 +20,10 @@ class ComponentService
      */
     public function findComponentsInPaths(array $paths, string $ext): array
     {
-        $components = $this->scannedPaths = [];
+        $components = [];
         foreach ($paths as $path) {
             if (!is_dir($path)) {
-                if (file_exists($path) && substr($path, - strlen($ext)) == $ext) {
+                if (file_exists($path) && str_ends_with((string) $path, $ext)) {
                     $components[] = $path;
                 }
                 continue;
@@ -42,10 +40,6 @@ class ComponentService
     /**
      * Removes all items from the provided array of component paths
      * that match the provided ignore list
-     *
-     * @param array $components
-     * @param array $ignoreList
-     * @return array
      */
     public function removeComponentsFromIgnoreList(array $components, array $ignoreList): array
     {
@@ -53,7 +47,7 @@ class ComponentService
             return $components;
         }
 
-        $ignorePattern = $this->buildPattern($ignoreList);
+        $ignorePattern = static::buildPattern($ignoreList);
         if (!$ignorePattern) {
             throw new \Exception(sprintf(
                 'Invalid ignore pattern provided: %s',
@@ -61,17 +55,11 @@ class ComponentService
             ), 1601484307);
         }
 
-        return array_filter($components, function ($path) use ($ignorePattern) {
-            return !preg_match($ignorePattern, $path);
-        });
+        return array_filter($components, fn($path) => !preg_match($ignorePattern, (string) $path));
     }
 
     /**
      * Searches recursively for component files in a directory
-     *
-     * @param string $path
-     * @param string $ext
-     * @return array
      */
     protected function scanForComponents(string $path, string $ext): array
     {

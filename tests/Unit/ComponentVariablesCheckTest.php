@@ -4,60 +4,62 @@ declare(strict_types=1);
 
 namespace Sitegeist\FluidComponentsLinter\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Check\ComponentVariablesCheck;
 use Sitegeist\FluidComponentsLinter\CodeQuality\Issue\IssueInterface;
 
-final class ComponentVariablesCheckTest extends AbstractTest
+final class ComponentVariablesCheckTest extends AbstractTestClass
 {
-    public function dataProvider()
+    public static function dataProvider()
     {
         return [
             'requirePrefixerPrefixUsed' => [
-                $this->generateConfiguration(true, IssueInterface::SEVERITY_MAJOR, false, IssueInterface::SEVERITY_MAJOR),
+                static::generateConfiguration(true, IssueInterface::SEVERITY_MAJOR, false, IssueInterface::SEVERITY_MAJOR),
                 '<fc:component><fc:renderer>{component.prefix}</fc:renderer></fc:component>',
                 0,
                 IssueInterface::SEVERITY_MAJOR
             ],
             'requirePrefixerClassUsed' => [
-                $this->generateConfiguration(true, IssueInterface::SEVERITY_MAJOR, false, IssueInterface::SEVERITY_MAJOR),
+                static::generateConfiguration(true, IssueInterface::SEVERITY_MAJOR, false, IssueInterface::SEVERITY_MAJOR),
                 '<fc:component><fc:renderer>{component.class}</fc:renderer></fc:component>',
                 0,
                 IssueInterface::SEVERITY_MAJOR
             ],
             'requirePrefixerMinorSeverity' => [
-                $this->generateConfiguration(true, IssueInterface::SEVERITY_MINOR, false, IssueInterface::SEVERITY_MAJOR),
+                static::generateConfiguration(true, IssueInterface::SEVERITY_MINOR, false, IssueInterface::SEVERITY_MAJOR),
                 '<fc:component><fc:renderer></fc:renderer></fc:component>',
                 1,
                 IssueInterface::SEVERITY_MINOR
             ],
             'requirePrefixerDisabled' => [
-                $this->generateConfiguration(false, IssueInterface::SEVERITY_MAJOR, false, IssueInterface::SEVERITY_MAJOR),
+                static::generateConfiguration(false, IssueInterface::SEVERITY_MAJOR, false, IssueInterface::SEVERITY_MAJOR),
                 '<fc:component><fc:renderer></fc:renderer></fc:component>',
                 0,
                 IssueInterface::SEVERITY_MAJOR
             ],
 
             'requireClassClassUsed' => [
-                $this->generateConfiguration(false, IssueInterface::SEVERITY_MAJOR, true, IssueInterface::SEVERITY_MAJOR),
+                static::generateConfiguration(false, IssueInterface::SEVERITY_MAJOR, true, IssueInterface::SEVERITY_MAJOR),
                 '<fc:component><fc:renderer>{class}</fc:renderer></fc:component>',
                 0,
                 IssueInterface::SEVERITY_MAJOR
             ],
             'requireClassMinorSeverity' => [
-                $this->generateConfiguration(false, IssueInterface::SEVERITY_MAJOR, true, IssueInterface::SEVERITY_MINOR),
+                static::generateConfiguration(false, IssueInterface::SEVERITY_MAJOR, true, IssueInterface::SEVERITY_MINOR),
                 '<fc:component><fc:renderer></fc:renderer></fc:component>',
                 1,
                 IssueInterface::SEVERITY_MINOR
             ],
             'requireClassDisabled' => [
-                $this->generateConfiguration(false, IssueInterface::SEVERITY_MAJOR, false, IssueInterface::SEVERITY_MAJOR),
+                static::generateConfiguration(false, IssueInterface::SEVERITY_MAJOR, false, IssueInterface::SEVERITY_MAJOR),
                 '<fc:component><fc:renderer></fc:renderer></fc:component>',
                 0,
                 IssueInterface::SEVERITY_MAJOR
             ],
 
             'combination' => [
-                $this->generateConfiguration(true, IssueInterface::SEVERITY_MAJOR, true, IssueInterface::SEVERITY_MAJOR),
+                static::generateConfiguration(true, IssueInterface::SEVERITY_MAJOR, true, IssueInterface::SEVERITY_MAJOR),
                 '<fc:component><fc:renderer></fc:renderer></fc:component>',
                 2,
                 IssueInterface::SEVERITY_MAJOR
@@ -65,9 +67,8 @@ final class ComponentVariablesCheckTest extends AbstractTest
         ];
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[Test]
+    #[DataProvider('dataProvider')]
     public function testChecksForMinimumMaximumParameterCount(
         array $configuration,
         string $componentSource,
@@ -83,7 +84,7 @@ final class ComponentVariablesCheckTest extends AbstractTest
         }
     }
 
-    public function generateConfiguration(
+    public static function generateConfiguration(
         bool $requirePrefixer,
         string $requirePrefixerSeverity,
         bool $requireClass,
