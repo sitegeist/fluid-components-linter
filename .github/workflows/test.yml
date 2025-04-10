@@ -14,7 +14,7 @@ jobs:
                     php-version: 8.4
 
             -
-                uses: actions/checkout@v2
+                uses: actions/checkout@v4
 
             -
                 name: Validate composer.json
@@ -22,7 +22,7 @@ jobs:
 
             -
                 name: Cache composer dependencies
-                uses: actions/cache@v1
+                uses: actions/cache@v4
                 with:
                     path: ~/.composer/cache
                     key: composer-php-8.4
@@ -56,7 +56,7 @@ jobs:
                     php-version: ${{ matrix.php-version }}
 
             -
-                uses: actions/checkout@v2
+                uses: actions/checkout@v4
 
             -
                 name: Validate composer.json
@@ -64,7 +64,7 @@ jobs:
 
             -
                 name: Cache composer dependencies
-                uses: actions/cache@v1
+                uses: actions/cache@v4
                 with:
                     path: ~/.composer/cache
                     key: composer-php-${{ matrix.php-version }}
