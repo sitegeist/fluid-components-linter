@@ -85,7 +85,7 @@ class CodeQualityService
         return $issues;
     }
 
-    protected function blocker(string $message, string $path, int $line = null, int $column = null): Issue
+    protected function blocker(string $message, string $path, ?int $line = null, ?int $column = null): Issue
     {
         $issue = new Issue($message, [], $path, $line, $column);
         return $issue->setSeverity(IssueInterface::SEVERITY_BLOCKER);

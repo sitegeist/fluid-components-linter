@@ -30,7 +30,7 @@ abstract class AbstractCheck implements CheckInterface
         return $this;
     }
 
-    protected function issue(string $message, array $data = [], int $line = null, int $column = null): Issue
+    protected function issue(string $message, array $data = [], ?int $line = null, ?int $column = null): Issue
     {
         $issue = new Issue($message, $data, $this->component->path, $line, $column);
         return $issue

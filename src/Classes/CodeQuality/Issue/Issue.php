@@ -31,7 +31,7 @@ class Issue implements IssueInterface
         return $this->checkName;
     }
 
-    public function setLocation(string $file, int $line = null, int $column = null): self
+    public function setLocation(string $file, ?int $line = null, ?int $column = null): self
     {
         $this->file = $file;
         $this->line = $line ?? $this->line;

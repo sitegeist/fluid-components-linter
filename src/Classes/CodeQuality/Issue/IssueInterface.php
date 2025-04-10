@@ -22,7 +22,7 @@ interface IssueInterface
         self::SEVERITY_BLOCKER
     ];
 
-    public function __construct(string $description, array $data, string $file, int $line = null, int $column = null);
+    public function __construct(string $description, array $data, string $file, ?int $line = null, ?int $column = null);
     public function getCheckName(): string;
     public function getFile(): string;
     public function getLine(): ?int;
